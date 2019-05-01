@@ -22,6 +22,7 @@ public class HelloController {
     @RequestMapping("/hello")
     @ResponseBody
     public String getMsg() {
+        System.out.println("javaboy");
         String s = helloService.sayHello(1);
         return s;
     }
