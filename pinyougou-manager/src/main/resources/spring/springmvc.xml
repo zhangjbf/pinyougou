@@ -20,11 +20,6 @@ http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <context:component-scan base-package="com.pinyougou.controller"/>
     <mvc:annotation-driven/>
-    <bean
-            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
 
     <!-- 资源映射 -->
 
