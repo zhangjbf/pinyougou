@@ -1,11 +1,14 @@
 package com.pinyougou.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.com.javaboy.HelloService;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.pinyougou.itf.ItemService;
+import com.pinyougou.pojo.TbItem;
 
 /**
  * @Version: 1.0
@@ -17,12 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class HelloController {
 
     @Autowired
-    private HelloService helloService;
+    private ItemService itemService;
 
     @RequestMapping("/hello")
     @ResponseBody
-    public String getMsg() {
-        String s = helloService.sayHello(1);
+    public List<TbItem> getMsg() {
+        List<TbItem> s = itemService.listItem();
         return s;
     }
 }
