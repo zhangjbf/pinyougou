@@ -18,6 +18,6 @@
                     loadbalance="roundrobin" cluster="failfast" delay="-1" timeout="60000"
                     retries="0"/>
 
-    <dubbo:service ref="helloService" interface="com.com.javaboy.HelloService" delay="-1"
+    <dubbo:service ref="itemService" interface="com.pinyougou.itf.ItemService" delay="-1"
                    timeout="6000" cluster="failfast" version="1.0"></dubbo:service>
 </beans>

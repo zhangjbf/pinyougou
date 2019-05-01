@@ -22,13 +22,13 @@
         <property name="minIdle" value="5" />
     </bean>
     <!-- 配置sqlsessionFactory -->
-    <!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">-->
-        <!--<property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml"></property>-->
-        <!--<property name="dataSource" ref="dataSource"></property>-->
-        <!--<property name="mapperLocations" value="classpath:mapper/*.xml" />-->
-    <!--</bean>-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatis/SqlMapConfig.xml"></property>
+        <property name="dataSource" ref="dataSource"></property>
+        <property name="mapperLocations" value="classpath:mapper/*.xml" />
+    </bean>
     <!-- 配置扫描包，加载mapper代理对象 -->
-    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
-        <!--<property name="basePackage" value="com.taotao.mapper"></property>-->
-    <!--</bean>-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.pinyougou.dao"></property>
+    </bean>
 </beans>
