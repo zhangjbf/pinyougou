@@ -25,6 +25,7 @@ public class HelloController {
     @RequestMapping("/hello")
     @ResponseBody
     public List<TbItem> getMsg() {
+        System.out.println("javaboy");
         List<TbItem> s = itemService.listItem();
         return s;
     }
