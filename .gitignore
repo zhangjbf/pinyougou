@@ -40,3 +40,5 @@ Thumbs.db
 /pinyougou-manager/*.iml
 /pinyougou-sellergoods/pinyougou-sellergoods-impl/pinyougou-sellergoods-impl.iml
 /pinyougou-common/*.iml
+/pinyougou-parent/*.iml
+/pinyougou-sellergoods/*.iml
