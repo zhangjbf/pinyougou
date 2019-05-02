@@ -9,5 +9,7 @@
 
     <dubbo:reference id="itemService" interface="com.pinyougou.itf.ItemService" timeout="60000"
                      version="1.0"/>
+    <dubbo:reference id="brandService" interface="com.pinyougou.itf.BrandService" timeout="60000"
+                     version="1.0"/>
 
 </beans>

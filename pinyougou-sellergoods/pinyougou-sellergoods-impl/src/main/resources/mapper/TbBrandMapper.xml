@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinyougou.dao.TbBrandMapper">
+    <resultMap id="BaseResultMap" type="com.pinyougou.pojo.TbBrand">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="first_char" property="firstChar" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, name, first_char
+  </sql>
+    <select id="search" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_brand
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null">
+                and name = #{name}
+            </if>
+            <if test="firstChar != null">
+                and first_char = #{firstChar}
+            </if>
+        </where>
+    </select>
+    <insert id="save" parameterType="com.pinyougou.vo.BrandVO" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_brand
+        (name, first_char)
+        values
+        (#{name,jdbcType=VARCHAR}, #{firstChar,jdbcType=VARCHAR})
+    </insert>
+    <delete id="delete">
+        delete from tb_brand where
+        id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <select id="findById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_brand
+        where id = #{id}
+    </select>
+    <update id="update" parameterType="com.pinyougou.vo.BrandVO">
+        update tb_brand
+        set name = #{name}, first_char = #{firstChar}
+        where id = #{id}
+    </update>
+</mapper>
