@@ -14,7 +14,7 @@
         from tb_specification
         <where>
             <if test="specName != null">
-                and spec_name = #{specName}
+                and spec_name like concat('%',#{specName},'%')
             </if>
         </where>
     </select>

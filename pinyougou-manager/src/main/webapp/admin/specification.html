@@ -49,8 +49,8 @@
                             </div>
                             <div class="box-tools pull-right">
                                 <div class="has-feedback">
-							                    规格名称：<input  >									
-									<button class="btn btn-default" >查询</button>                                    
+							                    规格名称：<input type="text" ng-model="searchEntity.specName" >
+                                    <input class="btn btn-default" ng-click="reloadList()" type="button" value="查询">
                                 </div>
                             </div>
                             <!--工具栏/-->
