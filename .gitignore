@@ -39,3 +39,4 @@ Thumbs.db
 /.idea
 /pinyougou-manager/*.iml
 /pinyougou-sellergoods/pinyougou-sellergoods-impl/pinyougou-sellergoods-impl.iml
+/pinyougou-common/*.iml
