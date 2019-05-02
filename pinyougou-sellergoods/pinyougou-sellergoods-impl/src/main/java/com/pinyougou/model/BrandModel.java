@@ -27,6 +27,9 @@ public class BrandModel extends TransactionSupport {
     private TbBrandMapper tbBrandMapper;
 
     public PageResult<TbBrand> search(BrandVO brandVO) {
+        if (null == brandVO) {
+            return new PageResult<>();
+        }
         PageHelper.startPage(brandVO.getPage(), brandVO.getRows());
         List<TbBrand> brandList = tbBrandMapper.search(brandVO);
         PageInfo<TbBrand> info = new PageInfo<>(brandList);
