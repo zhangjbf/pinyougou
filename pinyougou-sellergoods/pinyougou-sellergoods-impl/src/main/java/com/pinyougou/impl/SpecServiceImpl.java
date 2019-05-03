@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.pinyougou.itf.SpecService;
 import com.pinyougou.model.PageResult;
+import com.pinyougou.model.SelectOptionVO;
 import com.pinyougou.model.ServiceResult;
 import com.pinyougou.model.SpecModel;
 import com.pinyougou.pojo.TbSpecification;
@@ -56,6 +57,13 @@ public class SpecServiceImpl implements SpecService {
     public ServiceResult<Boolean> update(SpecificationVO specificationVO) {
         ServiceResult<Boolean> serviceResult = new ServiceResult<>();
         serviceResult.setResult(specModel.update(specificationVO));
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<List<SelectOptionVO>> selectOptionList() {
+        ServiceResult<List<SelectOptionVO>> serviceResult = new ServiceResult<>();
+        serviceResult.setResult(specModel.selectOptionList());
         return serviceResult;
     }
 }

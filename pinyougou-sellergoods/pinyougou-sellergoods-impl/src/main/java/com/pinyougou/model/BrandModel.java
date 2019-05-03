@@ -1,5 +1,6 @@
 package com.pinyougou.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,5 +85,20 @@ public class BrandModel extends TransactionSupport {
             this.rollbackTransaction(staus);
             throw new BusinessException("系统异常");
         }
+    }
+
+    public List<SelectOptionVO> selectOptionList() {
+        List<SelectOptionVO> listData = new ArrayList<>();
+
+        BrandVO brandVO = new BrandVO();
+        List<TbBrand> tbBrands = tbBrandMapper.search(brandVO);
+        if (null != tbBrands && tbBrands.size() > 0) {
+            SelectOptionVO vo = null;
+            for (TbBrand tbBrand : tbBrands) {
+                vo = new SelectOptionVO(String.valueOf(tbBrand.getId()), tbBrand.getName());
+                listData.add(vo);
+            }
+        }
+        return listData;
     }
 }

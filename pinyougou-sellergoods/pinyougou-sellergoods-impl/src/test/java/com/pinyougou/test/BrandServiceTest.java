@@ -10,6 +10,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.pinyougou.itf.BrandService;
 import com.pinyougou.model.PageResult;
+import com.pinyougou.model.SelectOptionVO;
 import com.pinyougou.model.ServiceResult;
 import com.pinyougou.pojo.TbBrand;
 import com.pinyougou.vo.BrandVO;
@@ -59,5 +60,11 @@ public class BrandServiceTest {
         vo.setFirstChar("B");
         vo.setName("javaboyok");
         brandService.update(vo);
+    }
+
+    @Test
+    public void testSelectOptionList() {
+        ServiceResult<List<SelectOptionVO>> serviceResult = brandService.selectOptionList();
+        System.out.println(serviceResult);
     }
 }

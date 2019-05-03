@@ -3,6 +3,7 @@ package com.pinyougou.itf;
 import java.util.List;
 
 import com.pinyougou.model.PageResult;
+import com.pinyougou.model.SelectOptionVO;
 import com.pinyougou.model.ServiceResult;
 import com.pinyougou.pojo.TbSpecification;
 import com.pinyougou.vo.SpecificationVO;
@@ -64,4 +65,14 @@ public interface SpecService {
      * @date 2019/5/2
      */
     ServiceResult<Boolean> update(SpecificationVO specificationVO);
+
+    /**
+     * 获取规格json
+     *
+     * @param
+     * @return
+     * @author jiabin.zhang 张佳宾
+     * @date 2019/5/3
+     */
+    ServiceResult<List<SelectOptionVO>> selectOptionList();
 }

@@ -13,5 +13,7 @@
                      version="1.0"/>
     <dubbo:reference id="specService" interface="com.pinyougou.itf.SpecService" timeout="60000"
                      version="1.0"/>
+    <dubbo:reference id="typeTemplateService" interface="com.pinyougou.itf.TypeTemplateService" timeout="60000"
+                     version="1.0"/>
 
 </beans>

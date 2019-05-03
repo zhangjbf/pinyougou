@@ -3,6 +3,7 @@ package com.pinyougou.itf;
 import java.util.List;
 
 import com.pinyougou.model.PageResult;
+import com.pinyougou.model.SelectOptionVO;
 import com.pinyougou.model.ServiceResult;
 import com.pinyougou.pojo.TbBrand;
 import com.pinyougou.vo.BrandVO;
@@ -63,4 +64,14 @@ public interface BrandService {
      * @date 2019/5/2
      */
     ServiceResult<Boolean> update(BrandVO brandVO);
+
+    /**
+     * 查询品牌json
+     * 
+     * @param
+     * @return
+     * @author jiabin.zhang 张佳宾
+     * @date 2019/5/3
+     */
+    ServiceResult<List<SelectOptionVO>> selectOptionList();
 }

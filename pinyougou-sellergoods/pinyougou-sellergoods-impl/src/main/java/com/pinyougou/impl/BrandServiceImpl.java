@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.pinyougou.itf.BrandService;
 import com.pinyougou.model.BrandModel;
 import com.pinyougou.model.PageResult;
+import com.pinyougou.model.SelectOptionVO;
 import com.pinyougou.model.ServiceResult;
 import com.pinyougou.pojo.TbBrand;
 import com.pinyougou.vo.BrandVO;
@@ -56,6 +57,13 @@ public class BrandServiceImpl implements BrandService {
     public ServiceResult<Boolean> update(BrandVO brandVO) {
         ServiceResult<Boolean> serviceResult = new ServiceResult<>();
         serviceResult.setResult(brandModel.update(brandVO));
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<List<SelectOptionVO>> selectOptionList() {
+        ServiceResult<List<SelectOptionVO>> serviceResult = new ServiceResult<>();
+        serviceResult.setResult(brandModel.selectOptionList());
         return serviceResult;
     }
 }

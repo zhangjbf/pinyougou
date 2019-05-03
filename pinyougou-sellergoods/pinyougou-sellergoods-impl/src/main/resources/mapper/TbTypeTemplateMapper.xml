@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinyougou.dao.TbTypeTemplateMapper">
+    <resultMap id="BaseResultMap" type="com.pinyougou.pojo.TbTypeTemplate">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="spec_ids" property="specIds" jdbcType="VARCHAR"/>
+        <result column="brand_ids" property="brandIds" jdbcType="VARCHAR"/>
+        <result column="custom_attribute_items" property="customAttributeItems" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, name, spec_ids, brand_ids, custom_attribute_items
+  </sql>
+
+    <select id="search" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_type_template
+        <where>
+            <if test="name != null">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+    <insert id="add" parameterType="com.pinyougou.pojo.TbTypeTemplate" useGeneratedKeys="true" keyProperty="id">
+      insert into tb_type_template
+      (name, spec_ids, brand_ids, custom_attribute_items)
+      values
+      (#{name,jdbcType=VARCHAR}, #{specIds,jdbcType=VARCHAR},
+      #{brandIds,jdbcType=VARCHAR}, #{customAttributeItems,jdbcType=VARCHAR})
+    </insert>
+    <delete id="delete">
+        delete from tb_type_template
+        where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <select id="findOne" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_type_template
+        where id = #{id}
+    </select>
+    <update id="update" parameterType="com.pinyougou.pojo.TbTypeTemplate">
+        update tb_type_template
+        set name = #{name},spec_ids = #{specIds},brand_ids = #{brandIds},custom_attribute_items =#{customAttributeItems}
+        where id = #{id}
+    </update>
+</mapper>

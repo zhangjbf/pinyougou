@@ -1,5 +1,6 @@
 package com.pinyougou.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -113,5 +114,20 @@ public class SpecModel extends TransactionSupport {
             throw new BusinessException("保存异常");
         }
         return Boolean.TRUE;
+    }
+
+    public List<SelectOptionVO> selectOptionList() {
+        List<SelectOptionVO> listData = new ArrayList<>();
+
+        SpecificationVO specificationVO = new SpecificationVO();
+        List<TbSpecification> tbSpecifications = tbSpecificationMapper.search(specificationVO);
+        if (null != tbSpecifications && tbSpecifications.size() > 0) {
+            SelectOptionVO vo = null;
+            for (TbSpecification tbSpecification : tbSpecifications) {
+                vo = new SelectOptionVO(String.valueOf(tbSpecification.getId()), tbSpecification.getSpecName());
+                listData.add(vo);
+            }
+        }
+        return listData;
     }
 }

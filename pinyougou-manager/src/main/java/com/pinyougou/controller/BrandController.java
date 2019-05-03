@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pinyougou.itf.BrandService;
 import com.pinyougou.model.PageResult;
+import com.pinyougou.model.SelectOptionVO;
 import com.pinyougou.model.ServiceResult;
 import com.pinyougou.model.WebAppResult;
 import com.pinyougou.pojo.TbBrand;
@@ -88,6 +90,16 @@ public class BrandController {
             return WebAppResult.build(false, "修改出错");
         }
         return WebAppResult.ok();
+    }
+
+    @RequestMapping("/selectOptionList")
+    @ResponseBody
+    public List<SelectOptionVO> selectOptionList() {
+        ServiceResult<List<SelectOptionVO>> serviceResult = brandService.selectOptionList();
+        if (!serviceResult.getSuccess()) {
+            return new ArrayList<>();
+        }
+        return serviceResult.getResult();
     }
 
 }
