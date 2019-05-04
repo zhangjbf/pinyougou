@@ -46,10 +46,13 @@ public class SpecController {
     @RequestMapping("/add")
     public WebAppResult add(@RequestBody SpecificationVO specificationVO) {
         if (null == specificationVO) {
-            return WebAppResult.build(false, "系统错误");
+            return WebAppResult.build(false, "参数错误");
         }
         ServiceResult<Boolean> serviceResult = specService.add(specificationVO);
         if (!serviceResult.getSuccess()) {
+            return WebAppResult.build(false, serviceResult.getMessage());
+        }
+        if (!serviceResult.getResult()) {
             return WebAppResult.build(false, "保存错误");
         }
         return WebAppResult.ok();
@@ -70,6 +73,9 @@ public class SpecController {
         }
         ServiceResult<Boolean> serviceResult = specService.delete(listData);
         if (!serviceResult.getSuccess()) {
+            return WebAppResult.build(false, serviceResult.getMessage());
+        }
+        if (!serviceResult.getResult()) {
             return WebAppResult.build(false, "删除错误");
         }
         return WebAppResult.ok();
@@ -90,10 +96,13 @@ public class SpecController {
     @RequestMapping("/update")
     public WebAppResult update(@RequestBody SpecificationVO specificationVO) {
         if (null == specificationVO) {
-            return WebAppResult.build(false, "系统错误");
+            return WebAppResult.build(false, "参数错误");
         }
         ServiceResult<Boolean> serviceResult = specService.update(specificationVO);
         if (!serviceResult.getSuccess()) {
+            return WebAppResult.build(false, serviceResult.getMessage());
+        }
+        if (!serviceResult.getResult()) {
             return WebAppResult.build(false, "修改异常");
         }
         return WebAppResult.ok();

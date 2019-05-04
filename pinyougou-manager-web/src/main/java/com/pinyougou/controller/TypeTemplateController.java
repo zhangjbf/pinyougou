@@ -49,6 +49,9 @@ public class TypeTemplateController {
         }
         ServiceResult<Boolean> serviceResult = typeTemplateService.add(vo);
         if (!serviceResult.getSuccess()) {
+            return WebAppResult.build(false, serviceResult.getMessage());
+        }
+        if (!serviceResult.getResult()) {
             return WebAppResult.build(false, "保存错误");
         }
         return WebAppResult.ok();
@@ -70,6 +73,9 @@ public class TypeTemplateController {
         ServiceResult<Boolean> serviceResult = typeTemplateService.delete(listData);
         if (!serviceResult.getSuccess()) {
             return WebAppResult.build(false, serviceResult.getMessage());
+        }
+        if (!serviceResult.getResult()) {
+            return WebAppResult.build(false, "删除出错");
         }
         return WebAppResult.ok();
     }
@@ -94,6 +100,9 @@ public class TypeTemplateController {
         ServiceResult<Boolean> serviceResult = typeTemplateService.update(vo);
         if (!serviceResult.getSuccess()) {
             return WebAppResult.build(false, serviceResult.getMessage());
+        }
+        if (!serviceResult.getResult()) {
+            return WebAppResult.build(false, "修改出错");
         }
         return WebAppResult.ok();
 

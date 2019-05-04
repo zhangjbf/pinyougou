@@ -35,7 +35,7 @@ public class SpecModel extends TransactionSupport {
 
     public PageResult<TbSpecification> search(SpecificationVO specificationVO) {
         if (null == specificationVO) {
-            return new PageResult<>();
+            throw new BusinessException("参数有误");
         }
         PageHelper.startPage(specificationVO.getPage(), specificationVO.getRows());
         List<TbSpecification> specificationList = tbSpecificationMapper.search(specificationVO);
@@ -45,7 +45,7 @@ public class SpecModel extends TransactionSupport {
 
     public Boolean add(SpecificationVO specificationVO) {
         if (null == specificationVO) {
-            return Boolean.FALSE;
+            throw new BusinessException("参数有误");
         }
         TransactionStatus status = this.createTransactionStatus(TransactionDefinition.PROPAGATION_REQUIRED);
         try {
@@ -95,7 +95,7 @@ public class SpecModel extends TransactionSupport {
 
     public Boolean update(SpecificationVO specificationVO) {
         if (null == specificationVO) {
-            return Boolean.FALSE;
+            throw new BusinessException("参数有误");
         }
         TransactionStatus status = this.createTransactionStatus(TransactionDefinition.PROPAGATION_REQUIRED);
         try {

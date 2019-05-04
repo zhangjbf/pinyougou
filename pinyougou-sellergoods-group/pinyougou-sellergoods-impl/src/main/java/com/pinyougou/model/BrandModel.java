@@ -29,16 +29,18 @@ public class BrandModel extends TransactionSupport {
 
     public PageResult<TbBrand> search(BrandVO brandVO) {
         if (null == brandVO) {
-            return new PageResult<>();
+            throw new BusinessException("请求参数错误");
         }
         PageHelper.startPage(brandVO.getPage(), brandVO.getRows());
         List<TbBrand> brandList = tbBrandMapper.search(brandVO);
         PageInfo<TbBrand> info = new PageInfo<>(brandList);
         return new PageResult<>(info.getTotal(), info.getList());
-
     }
 
     public Boolean save(BrandVO brandVO) {
+        if (null == brandVO) {
+            throw new BusinessException("请求参数错误");
+        }
         TransactionStatus status = this.createTransactionStatus(TransactionDefinition.PROPAGATION_REQUIRED);
         try {
             Integer row = tbBrandMapper.save(brandVO);
@@ -67,7 +69,7 @@ public class BrandModel extends TransactionSupport {
 
     public TbBrand findById(Integer id) {
         if (null == id || id == 0) {
-            return new TbBrand();
+            throw new BusinessException("参数有误");
         }
         return tbBrandMapper.findById(id);
     }

@@ -44,9 +44,12 @@ public class BrandController {
 
     @RequestMapping("/save")
     public WebAppResult save(@RequestBody BrandVO brandVO) {
+        if (null == brandVO) {
+            return WebAppResult.build(false, "参数错误");
+        }
         ServiceResult<Boolean> serviceResult = brandService.save(brandVO);
         if (!serviceResult.getSuccess()) {
-            return WebAppResult.build(false, "系统错误");
+            return WebAppResult.build(false, serviceResult.getMessage());
         }
         if (!serviceResult.getResult()) {
             return WebAppResult.build(false, "保存失败");
@@ -68,6 +71,9 @@ public class BrandController {
         }
         ServiceResult<Boolean> serviceResult = brandService.delete(idList);
         if (!serviceResult.getSuccess()) {
+            return WebAppResult.build(false, serviceResult.getMessage());
+        }
+        if (!serviceResult.getResult()) {
             return WebAppResult.build(false, "删除出错");
         }
         return WebAppResult.ok();
@@ -87,6 +93,9 @@ public class BrandController {
     public WebAppResult update(@RequestBody BrandVO brandVO) {
         ServiceResult<Boolean> serviceResult = brandService.update(brandVO);
         if (!serviceResult.getSuccess()) {
+            return WebAppResult.build(false, serviceResult.getMessage());
+        }
+        if (!serviceResult.getResult()) {
             return WebAppResult.build(false, "修改出错");
         }
         return WebAppResult.ok();
