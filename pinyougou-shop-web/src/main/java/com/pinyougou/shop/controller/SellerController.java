@@ -26,6 +26,7 @@ public class SellerController {
 
     @RequestMapping("/add")
     public WebAppResult add(@RequestBody SellerVO vo) {
+        System.out.println("javaboy");
         if (null == vo) {
             return WebAppResult.build(false, "请求参数错误");
         }
