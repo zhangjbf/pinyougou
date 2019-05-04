@@ -8,7 +8,7 @@
 
     <!--定义了提供方应用信息，用于计算依赖关系；在 dubbo-admin 或 dubbo-monitor 会显示这个名字，方便辨识 -->
     <dubbo:application name="${prop.dubbo.service.name}"
-                       owner="mph" organization="rograndec">
+                       owner="javaboy" organization="pinyougou">
         <dubbo:parameter key="shutdown.timeout" value="120000"/>
     </dubbo:application>
 
@@ -18,14 +18,14 @@
                     loadbalance="roundrobin" cluster="failfast" delay="-1" timeout="60000"
                     retries="0"/>
 
-    <dubbo:service ref="brandService" interface="com.pinyougou.itf.BrandService" delay="-1"
-                   timeout="6000" cluster="failfast" version="1.0"></dubbo:service>
-    <dubbo:service ref="itemService" interface="com.pinyougou.itf.ItemService" delay="-1"
-                   timeout="6000" cluster="failfast" version="1.0"></dubbo:service>
-    <dubbo:service ref="specService" interface="com.pinyougou.itf.SpecService" delay="-1"
-                   timeout="6000" cluster="failfast" version="1.0"></dubbo:service>
-    <dubbo:service ref="typeTemplateService" interface="com.pinyougou.itf.TypeTemplateService" delay="-1"
-                   timeout="6000" cluster="failfast" version="1.0"></dubbo:service>
-    <dubbo:service ref="itemCatService" interface="com.pinyougou.itf.ItemCatService" delay="-1"
-                   timeout="6000" cluster="failfast" version="1.0"></dubbo:service>
+    <dubbo:service ref="brandService" interface="com.pinyougou.itf.BrandService" delay="-1" timeout="6000"
+                   cluster="failfast" version="1.0"></dubbo:service>
+    <dubbo:service ref="itemService" interface="com.pinyougou.itf.ItemService" delay="-1" timeout="6000"
+                   cluster="failfast" version="1.0"></dubbo:service>
+    <dubbo:service ref="specService" interface="com.pinyougou.itf.SpecService" delay="-1" timeout="6000"
+                   cluster="failfast" version="1.0"></dubbo:service>
+    <dubbo:service ref="typeTemplateService" interface="com.pinyougou.itf.TypeTemplateService" delay="-1" timeout="6000"
+                   cluster="failfast" version="1.0"></dubbo:service>
+    <dubbo:service ref="itemCatService" interface="com.pinyougou.itf.ItemCatService" delay="-1" timeout="6000"
+                   cluster="failfast" version="1.0"></dubbo:service>
 </beans>
