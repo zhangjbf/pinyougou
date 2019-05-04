@@ -1,6 +1,8 @@
 package com.pinyougou.shop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,10 +25,15 @@ public class SellerController {
     private SellerService sellerService;
 
     @RequestMapping("/add")
-    public WebAppResult add(SellerVO vo) {
+    public WebAppResult add(@RequestBody SellerVO vo) {
         if (null == vo) {
             return WebAppResult.build(false, "请求参数错误");
         }
+        //bcrypt 加密
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String password = passwordEncoder.encode(vo.getPassword());
+        vo.setPassword(password);
+
         ServiceResult<Boolean> serviceResult = sellerService.add(vo);
         if (!serviceResult.getSuccess()) {
             return WebAppResult.build(false, serviceResult.getMessage());

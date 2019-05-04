@@ -49,4 +49,26 @@
           #{brief,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{legalPerson,jdbcType=VARCHAR},
           #{legalPersonCardId,jdbcType=VARCHAR}, #{bankUser,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR})
     </insert>
+    <select id="search" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_seller
+        <where>
+            <if test="name != null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="nickName != null">
+                and nick_name like concat('%',#{nickName},'%')
+            </if>
+        </where>
+    </select>
+    <select id="findOne" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_seller
+        where seller_id = #{sellerId}
+    </select>
+    <update id="updateStatus">
+        update tb_seller set status = #{status} where seller_id = #{sellerId}
+    </update>
 </mapper>

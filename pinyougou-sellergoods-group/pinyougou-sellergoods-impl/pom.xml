@@ -104,21 +104,45 @@
         </dependency>
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <!--profiles.active是自定义的字段（名字随便起），自定义字段可以有多个-->
+                <profiles.active>profile_conf/dev</profiles.active>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <profiles.active>profile_conf/test</profiles.active>
+            </properties>
+
+        </profile>
+    </profiles>
+
     <build>
+        <filters>
+            <filter>src/main/resources/${profiles.active}/dubbo.properties</filter>
+        </filters>
         <!--jar包名称-->
         <finalName>pinyougou-sellergoods-service</finalName>
         <resources>
+            <resource>
+                <!--这里是关键！ 根据不同的环境，把对应文件夹里的配置文件打包-->
+                <directory>src/main/resources/${profiles.active}</directory>
+            </resource>
             <!--recources文件夹下的所有文件都打进jar包-->
             <resource>
-                <targetPath>${project.build.directory}/classes</targetPath>
-                <directory>src/main/resources</directory>
+                <directory>src/main/resources/spring</directory>
                 <filtering>true</filtering>
                 <includes>
-                    <include>**/*.xml</include>
-                    <include>**/*.properties</include>
+                    <include>*.*</include>
                 </includes>
             </resource>
-
             <!-- 上文有说过，由于我的applicationContext.xml文件不是在META-INF下，这一段代码的作用就是将 applicationContext.xml文件拷贝到META-INF目录下-->
             <resource>
                 <targetPath>${project.build.directory}/classes/META-INF/spring</targetPath>
@@ -127,6 +151,18 @@
                 <includes>
                     <include>applicationContext-*.xml</include>
                 </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+                <!--打包时先排除掉二个文件夹-->
+                <excludes>
+                    <exclude>profile_conf/**/*</exclude>
+                    <exclude>spring/*</exclude>
+                </excludes>
             </resource>
         </resources>
 

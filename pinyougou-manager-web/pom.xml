@@ -106,7 +106,33 @@
             <artifactId>spring-security-config</artifactId>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <prop.registry.address>zookeeper://192.168.19.124:2181</prop.registry.address>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <prop.registry.address>zookeeper://192.168.1.110:2181</prop.registry.address>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
+        <finalName>ROOT</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <!-- 配置Tomcat插件 -->
             <plugin>

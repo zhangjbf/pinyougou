@@ -1,5 +1,10 @@
 package com.pinyougou.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.pinyougou.pojo.TbSeller;
 import com.pinyougou.vo.SellerVO;
 
 /**
@@ -11,4 +16,10 @@ import com.pinyougou.vo.SellerVO;
 public interface TbSellerMapper {
 
     Integer add(SellerVO vo);
+
+    List<TbSeller> search(SellerVO vo);
+
+    TbSeller findOne(String sellerId);
+
+    Integer updateStatus(@Param("sellerId") String sellerId, @Param("status") String status);
 }

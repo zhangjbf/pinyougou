@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pinyougou.itf.SellerService;
+import com.pinyougou.model.PageResult;
 import com.pinyougou.model.SellerModel;
 import com.pinyougou.model.ServiceResult;
+import com.pinyougou.pojo.TbSeller;
 import com.pinyougou.vo.SellerVO;
 
 /**
@@ -24,6 +26,27 @@ public class SellerServiceImpl implements SellerService {
     public ServiceResult<Boolean> add(SellerVO vo) {
         ServiceResult<Boolean> serviceResult = new ServiceResult<>();
         serviceResult.setResult(sellerModel.add(vo));
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<PageResult<TbSeller>> search(SellerVO vo) {
+        ServiceResult<PageResult<TbSeller>> serviceResult = new ServiceResult<>();
+        serviceResult.setResult(sellerModel.search(vo));
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<TbSeller> findOne(String sellerId) {
+        ServiceResult<TbSeller> serviceResult = new ServiceResult<>();
+        serviceResult.setResult(sellerModel.findOne(sellerId));
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<Boolean> updataStatus(String sellerId, String status) {
+        ServiceResult<Boolean> serviceResult = new ServiceResult<>();
+        serviceResult.setResult(sellerModel.updataStatus(sellerId,status));
         return serviceResult;
     }
 }
