@@ -97,11 +97,6 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
-        <!-- 日志处理 -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-        </dependency>
     </dependencies>
 
     <profiles>
@@ -111,16 +106,15 @@
                 <!--profiles.active是自定义的字段（名字随便起），自定义字段可以有多个-->
                 <profiles.active>profile_conf/dev</profiles.active>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
         <profile>
             <id>test</id>
             <properties>
                 <profiles.active>profile_conf/test</profiles.active>
             </properties>
-
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
     </profiles>
 

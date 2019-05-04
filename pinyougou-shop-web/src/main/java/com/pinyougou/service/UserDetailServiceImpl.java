@@ -33,16 +33,16 @@ public class UserDetailServiceImpl implements UserDetailsService {
 
         ServiceResult<TbSeller> serviceResult = sellerService.findOne(userName);
         if (!serviceResult.getSuccess()) {
-            return null;
+            throw new UsernameNotFoundException(serviceResult.getMessage());
         }
         if (null == serviceResult.getResult()) {
-            return null;
+            throw new UsernameNotFoundException("没有此商家");
         }
         if ("1".equals(serviceResult.getResult().getStatus())) {
             return new User(userName, serviceResult.getResult().getPassword(), grantedAuths);
+        }else{
+            throw new UsernameNotFoundException("商家审核未通过");
         }
-
-        return null;
     }
 
     public SellerService getSellerService() {
