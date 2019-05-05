@@ -16,5 +16,36 @@
         from tb_item_cat
         where parent_id = #{parentId}
     </select>
-
+    <insert id="add" parameterType="com.pinyougou.pojo.TbItemCat" useGeneratedKeys="true" keyProperty="true">
+        insert into tb_item_cat
+        (parent_id, name, type_id)
+        values
+        (#{parentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},#{typeId,jdbcType=INTEGER})
+    </insert>
+    <select id="findOne" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_item_cat
+        where id = #{id}
+    </select>
+    <update id="update" parameterType="com.pinyougou.pojo.TbItemCat">
+        update tb_item_cat set name = #{name},type_id = #{typeId}
+        where id = #{id}
+    </update>
+    <delete id="delete">
+        delete from tb_item_cat
+        where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <select id="findByParentIds" resultType="integer">
+        select
+          id
+        from tb_item_cat
+        where parent_id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

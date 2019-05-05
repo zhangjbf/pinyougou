@@ -6,7 +6,9 @@ import com.pinyougou.model.PageVO;
 
 public class SellerVO extends PageVO {
 
-    private String  sellerId;
+    private static final long serialVersionUID = 5808939301534075744L;
+
+    private String sellerId;
 
     private String  name;
 

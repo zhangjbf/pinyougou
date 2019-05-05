@@ -9,6 +9,7 @@ import com.pinyougou.itf.ItemCatService;
 import com.pinyougou.model.ItemCatModel;
 import com.pinyougou.model.ServiceResult;
 import com.pinyougou.pojo.TbItemCat;
+import com.pinyougou.vo.ItemCatVO;
 
 /**
  * @Version: 1.0
@@ -28,5 +29,33 @@ public class ItemCatServiceImpl implements ItemCatService {
         serviceResult.setResult(itemCatModel.findByParentId(parentId));
         return serviceResult;
 
+    }
+
+    @Override
+    public ServiceResult<Boolean> add(ItemCatVO vo) {
+        ServiceResult<Boolean> serviceResult = new ServiceResult<>();
+        serviceResult.setResult(itemCatModel.add(vo));
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<TbItemCat> findOne(Integer id) {
+        ServiceResult<TbItemCat> serviceResult = new ServiceResult<>();
+        serviceResult.setResult(itemCatModel.findOne(id));
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<Boolean> update(ItemCatVO vo) {
+        ServiceResult<Boolean> serviceResult = new ServiceResult<>();
+        serviceResult.setResult(itemCatModel.update(vo));
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<Boolean> delete(List<Integer> ids) {
+        ServiceResult<Boolean> serviceResult = new ServiceResult<>();
+        serviceResult.setResult(itemCatModel.delete(ids));
+        return serviceResult;
     }
 }
