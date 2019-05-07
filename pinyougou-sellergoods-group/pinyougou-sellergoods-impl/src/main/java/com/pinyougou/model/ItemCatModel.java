@@ -103,4 +103,9 @@ public class ItemCatModel extends TransactionSupport {
             findAllNeedDeleteIds(tbItemCatList, listIds);
         }
     }
+
+    public List<TbItemCat> findAll() {
+        return tbItemCatMapper.findAll();
+
+    }
 }

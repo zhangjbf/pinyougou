@@ -5,6 +5,7 @@ import java.util.List;
 import com.pinyougou.model.PageResult;
 import com.pinyougou.model.ServiceResult;
 import com.pinyougou.pojo.TbTypeTemplate;
+import com.pinyougou.vo.SpecVO;
 import com.pinyougou.vo.TypeTemplateVO;
 
 /**
@@ -63,4 +64,14 @@ public interface TypeTemplateService {
      * @date 2019/5/3
      */
     ServiceResult<Boolean> update(TypeTemplateVO vo);
+
+    /**
+     * 查询spec json
+     *
+     * @param
+     * @return
+     * @author jiabin.zhang 张佳宾
+     * @date 2019/5/7
+     */
+    ServiceResult<List<SpecVO>> findBySpecList(Integer id);
 }

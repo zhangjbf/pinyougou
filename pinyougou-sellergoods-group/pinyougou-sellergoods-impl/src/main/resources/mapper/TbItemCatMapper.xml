@@ -41,11 +41,16 @@
     </delete>
     <select id="findByParentIds" resultType="integer">
         select
-          id
+        id
         from tb_item_cat
         where parent_id in
         <foreach collection="list" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
+    </select>
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_item_cat
     </select>
 </mapper>

@@ -22,4 +22,6 @@ public interface TbTypeTemplateMapper {
     TbTypeTemplate findOne(Integer id);
 
     Integer update(TbTypeTemplate tbTypeTemplate);
+
+    String findBySpecList(Integer id);
 }

@@ -26,4 +26,7 @@ http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>
+
+    <import resource="classpath:sellergoods-dubbo-reference.xml"></import>
+
 </beans>

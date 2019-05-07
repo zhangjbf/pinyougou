@@ -58,4 +58,11 @@ public class ItemCatServiceImpl implements ItemCatService {
         serviceResult.setResult(itemCatModel.delete(ids));
         return serviceResult;
     }
+
+    @Override
+    public ServiceResult<List<TbItemCat>> findAll() {
+        ServiceResult<List<TbItemCat>> serviceResult = new ServiceResult<>();
+        serviceResult.setResult(itemCatModel.findAll());
+        return serviceResult;
+    }
 }

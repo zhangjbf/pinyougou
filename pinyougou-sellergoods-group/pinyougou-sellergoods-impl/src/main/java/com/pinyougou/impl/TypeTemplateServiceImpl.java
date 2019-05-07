@@ -10,6 +10,7 @@ import com.pinyougou.model.PageResult;
 import com.pinyougou.model.ServiceResult;
 import com.pinyougou.model.TypeTemplateModel;
 import com.pinyougou.pojo.TbTypeTemplate;
+import com.pinyougou.vo.SpecVO;
 import com.pinyougou.vo.TypeTemplateVO;
 
 /**
@@ -56,6 +57,13 @@ public class TypeTemplateServiceImpl implements TypeTemplateService {
     public ServiceResult<Boolean> update(TypeTemplateVO vo) {
         ServiceResult<Boolean> serviceResult = new ServiceResult<>();
         serviceResult.setResult(typeTemplateModel.update(vo));
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<List<SpecVO>> findBySpecList(Integer id) {
+        ServiceResult<List<SpecVO>> serviceResult = new ServiceResult<>();
+        serviceResult.setResult(typeTemplateModel.findBySpecList(id));
         return serviceResult;
     }
 }

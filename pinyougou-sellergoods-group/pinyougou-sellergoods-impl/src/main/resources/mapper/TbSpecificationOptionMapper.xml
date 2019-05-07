@@ -27,4 +27,8 @@
         from tb_specification_option
         where spec_id = #{id}
     </select>
+    <update id="update" parameterType="com.pinyougou.pojo.TbSpecificationOption">
+        update tb_specification_option set option_name = #{optionName},orders = #{orders}
+        where id = #{id}
+    </update>
 </mapper>

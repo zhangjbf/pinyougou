@@ -23,4 +23,6 @@ public interface TbItemCatMapper {
     Integer delete(List<Integer> ids);
 
     List<Integer> findByParentIds(List<Integer> ids);
+
+    List<TbItemCat> findAll();
 }

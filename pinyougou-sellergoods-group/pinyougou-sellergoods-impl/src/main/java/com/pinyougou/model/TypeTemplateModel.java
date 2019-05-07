@@ -1,5 +1,6 @@
 package com.pinyougou.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,12 @@ import org.springframework.transaction.TransactionStatus;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.pinyougou.dao.TbSpecificationOptionMapper;
 import com.pinyougou.dao.TbTypeTemplateMapper;
+import com.pinyougou.pojo.TbSpecificationOption;
 import com.pinyougou.pojo.TbTypeTemplate;
 import com.pinyougou.transaction.TransactionSupport;
+import com.pinyougou.vo.SpecVO;
 import com.pinyougou.vo.TypeTemplateVO;
 
 /**
@@ -24,7 +28,10 @@ import com.pinyougou.vo.TypeTemplateVO;
 public class TypeTemplateModel extends TransactionSupport {
 
     @Autowired
-    private TbTypeTemplateMapper tbTypeTemplateMapper;
+    private TbTypeTemplateMapper        tbTypeTemplateMapper;
+
+    @Autowired
+    private TbSpecificationOptionMapper tbSpecificationOptionMapper;
 
     public PageResult<TbTypeTemplate> search(TypeTemplateVO vo) {
         if (null == vo) {
@@ -97,5 +104,29 @@ public class TypeTemplateModel extends TransactionSupport {
             throw new BusinessException("系统异常");
         }
         return Boolean.TRUE;
+    }
+
+    public List<SpecVO> findBySpecList(Integer id) {
+        if (null == id || id == 0) {
+            throw new BusinessException("请求参数错误");
+        }
+        String specIds = tbTypeTemplateMapper.findBySpecList(id);
+        List<SelectOptionVO> selectOptionVOS = JsonUtils.jsonToList(specIds, SelectOptionVO.class);
+        if (null == selectOptionVOS || selectOptionVOS.size() == 0) {
+            return new ArrayList<>();
+        }
+        List<SpecVO> listData = new ArrayList<>();
+        for (SelectOptionVO selectOptionVO : selectOptionVOS) {
+            SpecVO specVO = new SpecVO();
+            specVO.setId(Integer.valueOf(selectOptionVO.getId()));
+            specVO.setText(selectOptionVO.getText());
+
+            List<TbSpecificationOption> tbSpecificationOptions = tbSpecificationOptionMapper
+                .findBySepcId(Integer.valueOf(selectOptionVO.getId()));
+            for (TbSpecificationOption tbSpecificationOption : tbSpecificationOptions) {
+                specVO.addOption(tbSpecificationOption.getId(), tbSpecificationOption.getOptionName());
+            }
+        }
+        return listData;
     }
 }

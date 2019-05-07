@@ -19,5 +19,7 @@
                      version="1.0"/>
     <dubbo:reference id="sellerService" interface="com.pinyougou.itf.SellerService" timeout="60000"
                      version="1.0"/>
+    <dubbo:reference id="goodsService" interface="com.pinyougou.itf.GoodsService" timeout="60000"
+                     version="1.0"/>
 
 </beans>

@@ -62,4 +62,14 @@ public interface ItemCatService {
      * @date 2019/5/5
      */
     ServiceResult<Boolean> delete(List<Integer> ids);
+
+    /**
+     * 查询商品分类
+     *
+     * @param
+     * @return
+     * @author jiabin.zhang 张佳宾
+     * @date 2019/5/7
+     */
+    ServiceResult<List<TbItemCat>> findAll();
 }

@@ -26,6 +26,9 @@ app.controller('goodsController' ,function($scope,$controller,$location,typeTemp
 	$scope.findOne=function(){	
 		var id = $location.search()['id'];
 		// alert(id);
+        if(!id){
+            return;
+        }
 		goodsService.findOne(id).success(
 			function(response){
 				$scope.entity= response;	
@@ -137,7 +140,6 @@ app.controller('goodsController' ,function($scope,$controller,$location,typeTemp
 	$scope.remove_iamge_entity = function(index){
 		$scope.entity.goodsDesc.itemImages.splice(index,1);
 	}
-	
 	// 查询一级分类列表:
 	$scope.selectItemCat1List = function(){
 		itemCatService.findByParentId(0).success(function(response){
@@ -147,6 +149,9 @@ app.controller('goodsController' ,function($scope,$controller,$location,typeTemp
 	
 	// 查询二级分类列表:
 	$scope.$watch("entity.goods.category1Id",function(newValue,oldValue){
+	    if(!newValue){
+	        return;
+        }
 		itemCatService.findByParentId(newValue).success(function(response){
 			$scope.itemCat2List = response;
 		});
@@ -154,6 +159,9 @@ app.controller('goodsController' ,function($scope,$controller,$location,typeTemp
 	
 	// 查询三级分类列表:
 	$scope.$watch("entity.goods.category2Id",function(newValue,oldValue){
+        if(!newValue){
+            return;
+        }
 		itemCatService.findByParentId(newValue).success(function(response){
 			$scope.itemCat3List = response;
 		});
@@ -161,6 +169,9 @@ app.controller('goodsController' ,function($scope,$controller,$location,typeTemp
 	
 	// 查询模块ID
 	$scope.$watch("entity.goods.category3Id",function(newValue,oldValue){
+        if(!newValue){
+            return;
+        }
 		itemCatService.findOne(newValue).success(function(response){
 			$scope.entity.goods.typeTemplateId = response.typeId;
 		});
@@ -168,6 +179,9 @@ app.controller('goodsController' ,function($scope,$controller,$location,typeTemp
 	
 	// 查询模板下的品牌列表:
 	$scope.$watch("entity.goods.typeTemplateId",function(newValue,oldValue){
+        if(!newValue){
+            return;
+        }
 		// 根据模板ID查询模板的数据
 		typeTemplateService.findOne(newValue).success(function(response){
 			$scope.typeTemplate = response;
@@ -183,6 +197,9 @@ app.controller('goodsController' ,function($scope,$controller,$location,typeTemp
 		
 		// 根据模板ID获得规格的列表的数据：
 		typeTemplateService.findBySpecList(newValue).success(function(response){
+            if(!newValue){
+                return;
+            }
 			$scope.specList = response;
 		});
 	});
