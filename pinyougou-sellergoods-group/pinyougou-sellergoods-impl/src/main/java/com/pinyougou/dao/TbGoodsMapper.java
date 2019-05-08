@@ -14,4 +14,10 @@ import com.pinyougou.vo.GoodsVO;
 public interface TbGoodsMapper {
 
     List<TbGoods> search(GoodsVO vo);
+
+    Integer add(TbGoods goods);
+
+    TbGoods findOne(Integer id);
+
+    Integer delete(List<Integer> listData);
 }

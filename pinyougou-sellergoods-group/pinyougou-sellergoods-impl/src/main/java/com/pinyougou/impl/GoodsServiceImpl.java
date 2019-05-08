@@ -1,5 +1,7 @@
 package com.pinyougou.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,27 @@ public class GoodsServiceImpl implements GoodsService {
     public ServiceResult<PageResult<TbGoods>> search(GoodsVO vo) {
         ServiceResult<PageResult<TbGoods>> serviceResult = new ServiceResult<>();
         serviceResult.setResult(goodsModel.search(vo));
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<Boolean> add(GoodsVO vo) {
+        ServiceResult<Boolean> serviceResult = new ServiceResult<>();
+        serviceResult.setResult(goodsModel.add(vo));
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<GoodsVO> findOne(Integer id) {
+        ServiceResult<GoodsVO> serviceResult = new ServiceResult<>();
+        serviceResult.setResult(goodsModel.findOne(id));
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<Boolean> delete(List<Integer> listData) {
+        ServiceResult<Boolean> serviceResult = new ServiceResult<>();
+        serviceResult.setResult(goodsModel.delete(listData));
         return serviceResult;
     }
 }

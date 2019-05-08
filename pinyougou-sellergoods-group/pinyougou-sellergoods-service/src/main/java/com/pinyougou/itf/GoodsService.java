@@ -1,5 +1,7 @@
 package com.pinyougou.itf;
 
+import java.util.List;
+
 import com.pinyougou.model.PageResult;
 import com.pinyougou.model.ServiceResult;
 import com.pinyougou.pojo.TbGoods;
@@ -22,4 +24,34 @@ public interface GoodsService {
      * @date 2019/5/7
      */
     ServiceResult<PageResult<TbGoods>> search(GoodsVO vo);
+
+    /**
+     * 新增商品
+     *
+     * @param
+     * @return
+     * @author jiabin.zhang 张佳宾
+     * @date 2019/5/8
+     */
+    ServiceResult<Boolean> add(GoodsVO vo);
+
+    /**
+     * 根据id查询商品
+     *
+     * @param
+     * @return
+     * @author jiabin.zhang 张佳宾
+     * @date 2019/5/8
+     */
+    ServiceResult<GoodsVO> findOne(Integer id);
+
+    /**
+     * 批量删除商品
+     *
+     * @param
+     * @return
+     * @author jiabin.zhang 张佳宾
+     * @date 2019/5/8
+     */
+    ServiceResult<Boolean> delete(List<Integer> listData);
 }

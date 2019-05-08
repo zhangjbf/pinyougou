@@ -1,6 +1,8 @@
 package com.pinyougou.vo;
 
 import com.pinyougou.model.PageVO;
+import com.pinyougou.pojo.TbGoods;
+import com.pinyougou.pojo.TbGoodsDesc;
 
 /**
  * @Version: 1.0
@@ -15,6 +17,26 @@ public class GoodsVO extends PageVO {
     private String            goodsName;
 
     private String            auditStatus;
+
+    private TbGoods           goods;
+
+    private TbGoodsDesc       goodsDesc;
+
+    public TbGoodsDesc getGoodsDesc() {
+        return goodsDesc;
+    }
+
+    public void setGoodsDesc(TbGoodsDesc goodsDesc) {
+        this.goodsDesc = goodsDesc;
+    }
+
+    public TbGoods getGoods() {
+        return goods;
+    }
+
+    public void setGoods(TbGoods goods) {
+        this.goods = goods;
+    }
 
     public String getGoodsName() {
         return goodsName;

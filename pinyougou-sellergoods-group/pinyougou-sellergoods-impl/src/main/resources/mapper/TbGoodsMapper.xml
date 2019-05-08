@@ -37,4 +37,30 @@
             </if>
         </where>
     </select>
+    <insert id="add" parameterType="com.pinyougou.pojo.TbGoods" keyProperty="id" useGeneratedKeys="true">
+        insert into tb_goods
+        (seller_id, goods_name, default_item_id, audit_status, is_marketable, brand_id,
+        caption, category1_id, category2_id, category3_id, small_pic, price, type_template_id,
+        is_enable_spec, is_delete)
+        values
+        (#{sellerId,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR},
+          #{defaultItemId,jdbcType=INTEGER}, #{auditStatus,jdbcType=VARCHAR}, #{isMarketable,jdbcType=VARCHAR},
+          #{brandId,jdbcType=INTEGER}, #{caption,jdbcType=VARCHAR}, #{category1Id,jdbcType=INTEGER},
+          #{category2Id,jdbcType=INTEGER}, #{category3Id,jdbcType=INTEGER}, #{smallPic,jdbcType=VARCHAR},
+          #{price,jdbcType=DECIMAL}, #{typeTemplateId,jdbcType=INTEGER}, #{isEnableSpec,jdbcType=VARCHAR},
+          #{isDelete,jdbcType=VARCHAR})
+    </insert>
+    <select id="findOne" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_goods
+        where id = #{id}
+    </select>
+    <delete id="delete">
+        delete from tb_goods
+        where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>
