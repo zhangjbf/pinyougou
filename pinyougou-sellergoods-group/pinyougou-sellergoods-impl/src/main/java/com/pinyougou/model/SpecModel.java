@@ -124,7 +124,9 @@ public class SpecModel extends TransactionSupport {
         if (null != tbSpecifications && tbSpecifications.size() > 0) {
             SelectOptionVO vo = null;
             for (TbSpecification tbSpecification : tbSpecifications) {
-                vo = new SelectOptionVO(String.valueOf(tbSpecification.getId()), tbSpecification.getSpecName());
+                vo = new SelectOptionVO();
+                vo.setId(String.valueOf(tbSpecification.getId()));
+                vo.setText(tbSpecification.getSpecName());
                 listData.add(vo);
             }
         }

@@ -1,7 +1,9 @@
 package com.pinyougou.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -123,9 +125,12 @@ public class TypeTemplateModel extends TransactionSupport {
 
             List<TbSpecificationOption> tbSpecificationOptions = tbSpecificationOptionMapper
                 .findBySepcId(Integer.valueOf(selectOptionVO.getId()));
+
+            Map<Integer, String> mapData = new HashMap<>();
             for (TbSpecificationOption tbSpecificationOption : tbSpecificationOptions) {
                 specVO.addOption(tbSpecificationOption.getId(), tbSpecificationOption.getOptionName());
             }
+            listData.add(specVO);
         }
         return listData;
     }

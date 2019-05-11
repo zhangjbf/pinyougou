@@ -97,7 +97,9 @@ public class BrandModel extends TransactionSupport {
         if (null != tbBrands && tbBrands.size() > 0) {
             SelectOptionVO vo = null;
             for (TbBrand tbBrand : tbBrands) {
-                vo = new SelectOptionVO(String.valueOf(tbBrand.getId()), tbBrand.getName());
+                vo = new SelectOptionVO();
+                vo.setId(String.valueOf(tbBrand.getId()));
+                vo.setText(tbBrand.getName());
                 listData.add(vo);
             }
         }

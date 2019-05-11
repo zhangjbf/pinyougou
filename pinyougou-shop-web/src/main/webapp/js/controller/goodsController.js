@@ -81,9 +81,11 @@ app.controller('goodsController' ,function($scope,$controller,$location,typeTemp
 			function(response){
 				if(response.flag){
 					//重新查询 
-		        	alert(response.message);
+		        	alert("保存成功");
 		        	location.href="goods.html";
-				}else{
+                    $scope.entity={};
+                    editor.html('');//清空富文本编辑器
+                }else{
 					alert(response.message);
 				}
 			}		
@@ -197,9 +199,6 @@ app.controller('goodsController' ,function($scope,$controller,$location,typeTemp
 		
 		// 根据模板ID获得规格的列表的数据：
 		typeTemplateService.findBySpecList(newValue).success(function(response){
-            if(!newValue){
-                return;
-            }
 			$scope.specList = response;
 		});
 	});

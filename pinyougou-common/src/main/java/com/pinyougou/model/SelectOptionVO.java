@@ -20,11 +20,6 @@ public class SelectOptionVO implements Serializable {
 
     private String            text;
 
-    public SelectOptionVO(String id, String text) {
-        this.id = id;
-        this.text = text;
-    }
-
     public String getId() {
         return id;
     }

@@ -36,6 +36,14 @@ public class SpecVO implements Serializable {
         this.text = text;
     }
 
+    public List<SpecOption> getOptions() {
+        return options;
+    }
+
+    public void setOptions(List<SpecOption> options) {
+        this.options = options;
+    }
+
     public void addOption(Integer id, String name) {
         options.add(new SpecOption(id, name));
     }
