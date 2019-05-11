@@ -2,33 +2,55 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pinyougou.dao.TbItemMapper">
     <resultMap id="BaseResultMap" type="com.pinyougou.pojo.TbItem">
-        <id column="id" property="id"/>
-        <result column="title" property="title"/>
-        <result column="sell_point" property="sellPoint"/>
-        <result column="price" property="price"/>
-        <result column="stock_count" property="stockCount"/>
-        <result column="num" property="num"/>
-        <result column="barcode" property="barcode"/>
-        <result column="image" property="image"/>
-        <result column="categoryId" property="categoryId"/>
-        <result column="status" property="status"/>
-        <result column="create_time" property="createTime"/>
-        <result column="update_time" property="updateTime"/>
-        <result column="item_sn" property="itemSn"/>
-        <result column="cost_pirce" property="costPirce"/>
-        <result column="market_price" property="marketPrice"/>
-        <result column="is_default" property="isDefault"/>
-        <result column="goods_id" property="goodsId"/>
-        <result column="seller_id" property="sellerId"/>
-        <result column="cart_thumbnail" property="cartThumbnail"/>
-        <result column="category" property="category"/>
-        <result column="brand" property="brand"/>
-        <result column="spec" property="spec"/>
-        <result column="seller" property="seller"/>
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="sell_point" property="sellPoint" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="stock_count" property="stockCount" jdbcType="INTEGER"/>
+        <result column="num" property="num" jdbcType="INTEGER"/>
+        <result column="barcode" property="barcode" jdbcType="VARCHAR"/>
+        <result column="image" property="image" jdbcType="VARCHAR"/>
+        <result column="categoryId" property="categoryId" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="item_sn" property="itemSn" jdbcType="VARCHAR"/>
+        <result column="cost_pirce" property="costPirce" jdbcType="DECIMAL"/>
+        <result column="market_price" property="marketPrice" jdbcType="DECIMAL"/>
+        <result column="is_default" property="isDefault" jdbcType="VARCHAR"/>
+        <result column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <result column="seller_id" property="sellerId" jdbcType="VARCHAR"/>
+        <result column="cart_thumbnail" property="cartThumbnail" jdbcType="VARCHAR"/>
+        <result column="category" property="category" jdbcType="VARCHAR"/>
+        <result column="brand" property="brand" jdbcType="VARCHAR"/>
+        <result column="spec" property="spec" jdbcType="VARCHAR"/>
+        <result column="seller" property="seller" jdbcType="VARCHAR"/>
     </resultMap>
+    <sql id="Base_Column_List">
+    id, title, sell_point, price, stock_count, num, barcode, image, categoryId, status,
+    create_time, update_time, item_sn, cost_pirce, market_price, is_default, goods_id,
+    seller_id, cart_thumbnail, category, brand, spec, seller
+  </sql>
 
-    <select id="listItem" resultMap="BaseResultMap">
-        select * from tb_item;
+    <insert id="add" parameterType="com.pinyougou.pojo.TbItem" keyProperty="id" useGeneratedKeys="true">
+      insert into tb_item
+      (title, sell_point, price, stock_count, num, barcode, image, categoryId, status,
+    create_time, update_time, item_sn, cost_pirce, market_price, is_default, goods_id,
+    seller_id, cart_thumbnail, category, brand, spec, seller)
+      values
+      (#{title,jdbcType=VARCHAR}, #{sellPoint,jdbcType=VARCHAR},
+      #{price,jdbcType=DECIMAL}, #{stockCount,jdbcType=INTEGER}, #{num,jdbcType=INTEGER},
+      #{barcode,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, #{categoryId,jdbcType=BIGINT},
+      #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{itemSn,jdbcType=VARCHAR}, #{costPirce,jdbcType=DECIMAL}, #{marketPrice,jdbcType=DECIMAL},
+      #{isDefault,jdbcType=VARCHAR}, #{goodsId,jdbcType=BIGINT}, #{sellerId,jdbcType=VARCHAR},
+      #{cartThumbnail,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR},
+      #{spec,jdbcType=VARCHAR}, #{seller,jdbcType=VARCHAR})
+    </insert>
+    <select id="findByGoodsId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_item
+        where goods_id = #{id}
     </select>
-
 </mapper>

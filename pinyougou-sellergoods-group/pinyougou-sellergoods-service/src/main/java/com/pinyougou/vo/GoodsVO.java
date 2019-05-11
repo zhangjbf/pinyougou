@@ -1,8 +1,11 @@
 package com.pinyougou.vo;
 
+import java.util.List;
+
 import com.pinyougou.model.PageVO;
 import com.pinyougou.pojo.TbGoods;
 import com.pinyougou.pojo.TbGoodsDesc;
+import com.pinyougou.pojo.TbItem;
 
 /**
  * @Version: 1.0
@@ -21,6 +24,8 @@ public class GoodsVO extends PageVO {
     private TbGoods           goods;
 
     private TbGoodsDesc       goodsDesc;
+
+    private List<TbItem>      itemList;
 
     public TbGoodsDesc getGoodsDesc() {
         return goodsDesc;
@@ -52,5 +57,13 @@ public class GoodsVO extends PageVO {
 
     public void setAuditStatus(String auditStatus) {
         this.auditStatus = auditStatus;
+    }
+
+    public List<TbItem> getItemList() {
+        return itemList;
+    }
+
+    public void setItemList(List<TbItem> itemList) {
+        this.itemList = itemList;
     }
 }

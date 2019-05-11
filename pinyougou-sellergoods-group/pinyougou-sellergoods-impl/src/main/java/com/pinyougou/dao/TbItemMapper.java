@@ -12,6 +12,7 @@ import com.pinyougou.pojo.TbItem;
  */
 public interface TbItemMapper {
 
+    Integer add(TbItem tbItem);
 
-    List<TbItem> listItem();
+    List<TbItem> findByGoodsId(Integer id);
 }
