@@ -105,4 +105,13 @@ public class ItemCatController {
         return WebAppResult.ok();
     }
 
+    @RequestMapping("/findAll")
+    public List<TbItemCat> findAll() {
+        ServiceResult<List<TbItemCat>> serviceResult = itemCatService.findAll();
+        if (!serviceResult.getSuccess()) {
+            return new ArrayList<>();
+        }
+        return serviceResult.getResult();
+    }
+
 }

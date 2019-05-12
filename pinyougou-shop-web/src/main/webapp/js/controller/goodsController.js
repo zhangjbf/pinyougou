@@ -105,7 +105,17 @@ app.controller('goodsController' ,function($scope,$controller,$location,typeTemp
 			}		
 		);				
 	}
-	
+	//提交审批
+    $scope.sendApprove = function(){
+        goodsService.sendApprove($scope.selectIds).success(
+            function (response) {
+                if(response.flag){
+                    $scope.reloadList();//刷新列表
+                    $scope.selectIds = [];
+                }
+            });
+    }
+
 	$scope.searchEntity={};//定义搜索对象 
 	
 	//搜索
@@ -258,7 +268,7 @@ app.controller('goodsController' ,function($scope,$controller,$location,typeTemp
 	}
 	
 	// 显示状态
-	$scope.status = ["未审核","审核通过","审核未通过","关闭"];
+	$scope.status = ["未审核","提交审核","审核通过","审核未通过","关闭"];
 	
 	$scope.itemCatList = [];
 	// 显示分类:

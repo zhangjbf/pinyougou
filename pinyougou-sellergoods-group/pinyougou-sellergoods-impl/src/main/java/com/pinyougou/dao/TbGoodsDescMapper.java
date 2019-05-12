@@ -17,4 +17,6 @@ public interface TbGoodsDescMapper {
     TbGoodsDesc findDescById(Integer goodsId);
 
     Integer delete(List<Integer> listData);
+
+    Integer update(TbGoodsDesc goodsDesc);
 }

@@ -2,6 +2,8 @@ package com.pinyougou.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.pinyougou.pojo.TbGoods;
 import com.pinyougou.vo.GoodsVO;
 
@@ -20,4 +22,8 @@ public interface TbGoodsMapper {
     TbGoods findOne(Integer id);
 
     Integer delete(List<Integer> listData);
+
+    Integer update(TbGoods goods);
+
+    Integer updateStatus(@Param("list") List<Integer> listData, @Param("status") String goodsStatus);
 }

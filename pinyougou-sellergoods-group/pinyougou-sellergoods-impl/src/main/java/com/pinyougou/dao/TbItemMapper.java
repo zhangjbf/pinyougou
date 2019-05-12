@@ -15,4 +15,6 @@ public interface TbItemMapper {
     Integer add(TbItem tbItem);
 
     List<TbItem> findByGoodsId(Integer id);
+
+    Integer update(TbItem item);
 }

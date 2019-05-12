@@ -153,4 +153,75 @@ public class GoodsModel extends TransactionSupport {
         }
         return Boolean.TRUE;
     }
+
+    public Boolean update(GoodsVO vo) {
+        if (null == vo) {
+            throw new BusinessException("请求参数错误");
+        }
+        TransactionStatus status = this.createTransactionStatus(TransactionDefinition.PROPAGATION_REQUIRED);
+        try {
+            TbGoods goods = vo.getGoods();
+            TbGoodsDesc goodsDesc = vo.getGoodsDesc();
+
+            tbGoodsMapper.update(goods);
+
+            tbGoodsDescMapper.update(goodsDesc);
+
+            List<TbItem> itemList = vo.getItemList();
+
+            String title = goods.getGoodsName();
+
+            for (TbItem item : itemList) {
+                Map<String, Object> specMap = JSON.parseObject(item.getSpec());
+                for (String key : specMap.keySet()) {
+                    title += " " + specMap.get(key);
+                }
+                item.setTitle(title);
+                item.setGoodsId(goods.getId());//商品SPU编号
+                item.setSellerId(goods.getSellerId());//商家编号
+                item.setCategoryId(goods.getCategory3Id());//商品分类编号（3级）
+                item.setCreateTime(new Date());//创建日期
+                item.setUpdateTime(new Date());//修改日期
+                //品牌名称
+                TbBrand brand = tbBrandMapper.findById(goods.getBrandId());
+                item.setBrand(brand.getName());
+                //分类名称
+                TbItemCat itemCat = tbItemCatMapper.findOne(goods.getCategory3Id());
+                item.setCategory(itemCat.getName());
+                //商家名称
+                TbSeller seller = tbSellerMapper.findOne(goods.getSellerId());
+                if (null != seller) {
+                    item.setSeller(seller.getNickName());
+                }
+                //图片地址（取spu的第一个图片）
+                List<Map> imageList = JSON.parseArray(vo.getGoodsDesc().getItemImages(), Map.class);
+                if (imageList.size() > 0) {
+                    item.setImage((String) imageList.get(0).get("url"));
+                }
+                tbItemMapper.update(item);
+            }
+            this.commitTransaction(status);
+        } catch (Exception e) {
+            this.rollbackTransaction(status);
+            throw new BusinessException("执行失败");
+        }
+        return Boolean.TRUE;
+    }
+
+    public Boolean updateStatus(List<Integer> listData, String goodsStatus) {
+        if (null == listData || listData.size() == 0) {
+            throw new BusinessException("请求参数错误");
+        }
+        TransactionStatus status = this.createTransactionStatus(TransactionDefinition.PROPAGATION_REQUIRED);
+        try {
+            tbGoodsMapper.updateStatus(listData,goodsStatus);
+            this.commitTransaction(status);
+        } catch (Exception e) {
+            this.rollbackTransaction(status);
+            throw new BusinessException("执行失败");
+        }
+        return Boolean.TRUE;
+
+    }
+
 }

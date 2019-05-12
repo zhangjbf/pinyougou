@@ -51,4 +51,18 @@ public class GoodsServiceImpl implements GoodsService {
         serviceResult.setResult(goodsModel.delete(listData));
         return serviceResult;
     }
+
+    @Override
+    public ServiceResult<Boolean> update(GoodsVO vo) {
+        ServiceResult<Boolean> serviceResult = new ServiceResult<>();
+        serviceResult.setResult(goodsModel.update(vo));
+        return serviceResult;
+    }
+
+    @Override
+    public ServiceResult<Boolean> updateStatus(List<Integer> listData,String status) {
+        ServiceResult<Boolean> serviceResult = new ServiceResult<>();
+        serviceResult.setResult(goodsModel.updateStatus(listData,status));
+        return serviceResult;
+    }
 }

@@ -54,4 +54,24 @@ public interface GoodsService {
      * @date 2019/5/8
      */
     ServiceResult<Boolean> delete(List<Integer> listData);
+
+    /**
+     * 修改商品数据
+     * 
+     * @param
+     * @return
+     * @author jiabin.zhang 张佳宾
+     * @date 2019/5/12
+     */
+    ServiceResult<Boolean> update(GoodsVO vo);
+
+    /**
+     * 批量送审
+     *
+     * @param
+     * @return
+     * @author jiabin.zhang 张佳宾
+     * @date 2019/5/12
+     */
+    ServiceResult<Boolean> updateStatus(List<Integer> listData,String status);
 }

@@ -98,4 +98,43 @@ public class GoodsController {
         return WebAppResult.ok();
     }
 
+    @RequestMapping("/update")
+    public WebAppResult update(@RequestBody GoodsVO vo) {
+        if (null == vo) {
+            return WebAppResult.build(false, "请求参数错误");
+        }
+        ServiceResult<Boolean> serviceResult = goodsService.update(vo);
+        if (!serviceResult.getSuccess()) {
+            return WebAppResult.build(false, serviceResult.getMessage());
+        }
+        if (!serviceResult.getResult()) {
+            return WebAppResult.build(false, "修改数据错误");
+        }
+        return WebAppResult.ok();
+
+    }
+
+    @RequestMapping("/sendApprove")
+    public WebAppResult sendApprove(String ids) {
+        if (StringUtils.isEmpty(ids)) {
+            return WebAppResult.build(false, "请求参数错误");
+        }
+        String[] idArray = ids.split(",");
+        if (null == idArray || idArray.length == 0) {
+            return WebAppResult.build(false, "请求参数错误");
+        }
+        List<Integer> listData = new ArrayList<>();
+        for (String idStr : idArray) {
+            listData.add(Integer.valueOf(idStr));
+        }
+        ServiceResult<Boolean> serviceResult = goodsService.updateStatus(listData, "1");
+        if (!serviceResult.getSuccess()) {
+            return WebAppResult.build(false, serviceResult.getMessage());
+        }
+        if (!serviceResult.getResult()) {
+            return WebAppResult.build(false, "送审失败");
+        }
+        return WebAppResult.ok();
+    }
+
 }
