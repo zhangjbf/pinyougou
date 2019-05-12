@@ -720,3 +720,7 @@ Thumbs.db
 /pinyougou-shop-web/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
 /pinyougou-shop-web/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
 /pinyougou-shop-web/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
+/pinyougou-content-group/*.iml
+/pinyougou-content-group/pinyougou-content-service/*.iml
+/pinyougou-content-group/pinyougou-content-parent/*.iml
+/pinyougou-content-group/pinyougou-content-impl/*.iml
