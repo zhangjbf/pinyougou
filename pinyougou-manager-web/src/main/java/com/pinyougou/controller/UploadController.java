@@ -1,4 +1,4 @@
-package com.pinyougou.shop.controller;
+package com.pinyougou.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +12,7 @@ import com.pinyougou.service.UploadService;
  * @Version: 1.0
  * @Author: jiabin.zhang 张佳宾
  * @Email: jiabin.zhang@rograndec.com
- * @CreateDate 2019/5/11
+ * @CreateDate 2019/5/13
  */
 @RestController
 @RequestMapping("/upload")
@@ -30,5 +30,4 @@ public class UploadController {
             return WebAppResult.build(false, e.getMessage());
         }
     }
-
 }

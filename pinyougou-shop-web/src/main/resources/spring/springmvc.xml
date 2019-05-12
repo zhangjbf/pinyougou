@@ -33,7 +33,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 
     <import resource="classpath:sellergoods-dubbo-reference.xml"></import>
 
-    <bean id="updateService" class="com.pinyougou.service.UpdateService">
+    <bean id="uploadService" class="com.pinyougou.service.UploadService">
     </bean>
 
 </beans>

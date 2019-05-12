@@ -12,10 +12,9 @@ import com.pinyougou.utils.IDUtils;
  * @Version: 1.0
  * @Author: jiabin.zhang 张佳宾
  * @Email: jiabin.zhang@rograndec.com
- * @CreateDate 2019/5/11
+ * @CreateDate 2019/5/13
  */
-public class UpdateService {
-
+public class UploadService {
     private static final String  IMAGE_BASE_URL      = "http://192.168.1.113:9999/images";
 
     private static final String  FILE_UPLOAD_PATH    = "/home/ftpuser/www/images";

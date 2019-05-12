@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+            http://code.alibabatech.com/schema/dubbo
+            http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!--定义了提供方应用信息，用于计算依赖关系；在 dubbo-admin 或 dubbo-monitor 会显示这个名字，方便辨识 -->
+    <dubbo:application name="${prop.dubbo.service.name}"
+                       owner="javaboy" organization="pinyougou">
+        <dubbo:parameter key="shutdown.timeout" value="120000"/>
+    </dubbo:application>
+
+    <dubbo:registry address="${prop.registry.address}"/>
+    <dubbo:protocol name="dubbo" port="${prop.dubbo.protocol.port}"/>
+    <dubbo:provider threadpool="cached" protocol="dubbo"
+                    loadbalance="roundrobin" cluster="failfast" delay="-1" timeout="60000"
+                    retries="0"/>
+
+    <dubbo:service ref="contentCategoryService" interface="com.pinyougou.content.itf.ContentCategoryService"
+                   delay="-1" timeout="6000"
+                   cluster="failfast" version="1.0"></dubbo:service>
+    <dubbo:service ref="contentService" interface="com.pinyougou.content.itf.ContentService"
+                   delay="-1" timeout="6000"
+                   cluster="failfast" version="1.0"></dubbo:service>
+
+</beans>
