@@ -36,8 +36,11 @@ public class ItemSearchModel {
             criteria.is(searchMap.get("keywords"));
             query.addCriteria(criteria);
         }
-        query.setOffset((Integer) searchMap.get("pageNo"));
-        query.setRows((Integer) searchMap.get("pageSize"));
+        Integer pageNo = (Integer) searchMap.get("pageNo");
+        Integer pageSize = (Integer) searchMap.get("pageSize");
+
+        query.setOffset((pageNo-1)*pageSize);
+        query.setRows(pageSize);
 
         ScoredPage<TbItem> pages = solrTemplate.queryForPage(query, TbItem.class);
         mapResult.put("rows", pages.getContent());
