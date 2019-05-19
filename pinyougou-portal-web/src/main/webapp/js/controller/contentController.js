@@ -10,9 +10,9 @@ app.controller("contentController", function ($scope, contentService) {
     //搜索  （传递参数）
     $scope.search = function () {
         if (!$scope.keywords) {
-            location.href = "http://localhost:8084/search.html#";
+            location.href = "http://192.168.1.112:8084/search.html#";
         } else {
-            location.href = "http://localhost:8084/search.html#?keywords=" + $scope.keywords;
+            location.href = "http://192.168.1.112:8084/search.html#?keywords=" + $scope.keywords;
         }
     }
 
