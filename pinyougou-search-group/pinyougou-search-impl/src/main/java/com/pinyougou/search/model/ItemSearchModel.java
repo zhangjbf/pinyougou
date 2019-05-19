@@ -10,6 +10,7 @@ import org.springframework.data.solr.core.query.Query;
 import org.springframework.data.solr.core.query.SimpleQuery;
 import org.springframework.data.solr.core.query.result.ScoredPage;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import com.pinyougou.search.pojo.TbItem;
 
@@ -28,12 +29,18 @@ public class ItemSearchModel {
     public Map<String, Object> search(Map searchMap) {
         Map<String, Object> mapResult = new HashMap<>();
 
-        Query query = new SimpleQuery();
-        Criteria criteria = new Criteria("item_keywords").is(searchMap.get("keywords"));
-        query.addCriteria(criteria);
+        String keywords = (String) searchMap.get("keywords");
+        Query query = new SimpleQuery("*:*");
+        Criteria criteria = new Criteria("item_keywords");
+        if (!StringUtils.isEmpty(keywords)) {
+            criteria.is(searchMap.get("keywords"));
+            query.addCriteria(criteria);
+        }
+        query.setOffset((Integer) searchMap.get("pageNo"));
+        query.setRows((Integer) searchMap.get("pageSize"));
 
         ScoredPage<TbItem> pages = solrTemplate.queryForPage(query, TbItem.class);
-        mapResult.put("rows", pages);
+        mapResult.put("rows", pages.getContent());
 
         return mapResult;
     }
