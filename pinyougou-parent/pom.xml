@@ -35,7 +35,7 @@
         <pagehelper.version>3.4.2-fix</pagehelper.version>
         <jsqlparser.version>0.9.1</jsqlparser.version>
         <commons-fileupload.version>1.3.1</commons-fileupload.version>
-        <jedis.version>2.7.2</jedis.version>
+        <jedis.version>2.8.1</jedis.version>
         <solrj.version>4.10.3</solrj.version>
         <version-dubbo>2.5.7</version-dubbo>
         <!-- 第三方库版本号 -->
@@ -45,12 +45,36 @@
         <version-log4j>1.2.17</version-log4j>
         <fast-json.version>1.2.47</fast-json.version>
         <spirng-secrity.version>4.1.0.RELEASE</spirng-secrity.version>
+        <spring-data-redis.version>1.7.2.RELEASE</spring-data-redis.version>
+        <jsonevent-layout.version>1.7</jsonevent-layout.version>
+        <spring-data-solr.version>1.5.5.RELEASE</spring-data-solr.version>
     </properties>
 
 
     <!-- 只定义依赖的版本，并不实际依赖 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-solr</artifactId>
+                <version>${spring-data-solr.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.logstash.log4j</groupId>
+                <artifactId>jsonevent-layout</artifactId>
+                <version>${jsonevent-layout.version}</version>
+            </dependency>
+            <!-- 缓存 -->
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-redis</artifactId>
+                <version>${spring-data-redis.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-web</artifactId>

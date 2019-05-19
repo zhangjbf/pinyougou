@@ -17,4 +17,6 @@ public interface TbItemMapper {
     List<TbItem> findByGoodsId(Integer id);
 
     Integer update(TbItem item);
+
+    List<TbItem> findAll();
 }

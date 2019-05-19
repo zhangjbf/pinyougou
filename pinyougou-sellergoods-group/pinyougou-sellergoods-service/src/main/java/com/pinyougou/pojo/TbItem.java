@@ -2,6 +2,10 @@ package com.pinyougou.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
+
+import org.apache.solr.client.solrj.beans.Field;
+import org.springframework.data.solr.core.mapping.Dynamic;
 
 /**
  *
@@ -15,117 +19,128 @@ public class TbItem implements Serializable {
     /**
      * 商品id，同时也是商品编号
      */
-    private Integer id;
+    @Field
+    private Integer             id;
 
     /**
      * 商品标题
      */
-    private String  title;
+    @Field("item_title")
+    private String              title;
 
     /**
      * 商品卖点
      */
-    private String  sellPoint;
+    private String              sellPoint;
 
     /**
      * 商品价格，单位为：元
      */
-    private Double  price;
+    @Field("item_price")
+    private Double              price;
 
     /**
      * null
      */
-    private Integer stockCount;
+    private Integer             stockCount;
 
     /**
      * 库存数量
      */
-    private Integer num;
+    private Integer             num;
 
     /**
      * 商品条形码
      */
-    private String  barcode;
+    private String              barcode;
 
     /**
      * 商品图片
      */
-    private String  image;
+    @Field("item_image")
+    private String              image;
 
     /**
      * 所属类目，叶子类目
      */
-    private Integer categoryId;
+    private Integer             categoryId;
 
     /**
      * 商品状态，1-正常，2-下架，3-删除
      */
-    private String  status;
+    private String              status;
 
     /**
      * 创建时间
      */
-    private Date    createTime;
+    private Date                createTime;
 
     /**
      * 更新时间
      */
-    private Date    updateTime;
+    private Date                updateTime;
 
     /**
      * null
      */
-    private String  itemSn;
+    private String              itemSn;
 
     /**
      * null
      */
-    private Double  costPirce;
+    private Double              costPirce;
 
     /**
      * null
      */
-    private Double  marketPrice;
+    private Double              marketPrice;
 
     /**
      * null
      */
-    private String  isDefault;
+    private String              isDefault;
 
     /**
      * null
      */
-    private Integer goodsId;
+    @Field("item_goodsid")
+    private Integer             goodsId;
 
     /**
      * null
      */
-    private String  sellerId;
+    private String              sellerId;
 
     /**
      * null
      */
-    private String  cartThumbnail;
+    private String              cartThumbnail;
 
     /**
      * null
      */
-    private String  category;
+    @Field("item_category")
+    private String              category;
+    /**
+     * null
+     */
+    @Field("item_brand")
+    private String              brand;
 
     /**
      * null
      */
-    private String  brand;
+    private String              spec;
 
     /**
      * null
      */
-    private String  spec;
+    @Field("item_seller")
+    private String              seller;
 
-    /**
-     * null
-     */
-    private String  seller;
+    @Dynamic
+    @Field("item_spec_*")
+    private Map<String, String> specMap;
 
     public Integer getId() {
         return id;
@@ -311,4 +326,11 @@ public class TbItem implements Serializable {
         this.seller = seller;
     }
 
+    public Map<String, String> getSpecMap() {
+        return specMap;
+    }
+
+    public void setSpecMap(Map<String, String> specMap) {
+        this.specMap = specMap;
+    }
 }

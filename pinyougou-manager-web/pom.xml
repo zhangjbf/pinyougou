@@ -50,10 +50,6 @@
             <groupId>org.jboss.netty</groupId>
             <artifactId>netty</artifactId>
         </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-        </dependency>
         <!-- Spring -->
         <dependency>
             <groupId>org.springframework</groupId>

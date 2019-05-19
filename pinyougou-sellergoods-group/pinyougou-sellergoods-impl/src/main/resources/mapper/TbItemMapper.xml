@@ -125,4 +125,10 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_item
+        where status = 1
+    </select>
 </mapper>

@@ -27,7 +27,7 @@ public class BrandServiceTest {
 
     @Before
     public void startup() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring/applicationContext-*.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext-*.xml");
         brandService = (BrandService) context.getBean("brandService");
     }
 

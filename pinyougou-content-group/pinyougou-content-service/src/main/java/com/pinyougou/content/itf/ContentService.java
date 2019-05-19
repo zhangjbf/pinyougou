@@ -63,4 +63,14 @@ public interface ContentService {
      * @date 2019/5/13
      */
     ServiceResult<TbContent> findOne(Integer id);
+
+    /**
+     * 根据分类id查询广告
+     *
+     * @param
+     * @return
+     * @author jiabin.zhang 张佳宾
+     * @date 2019/5/13
+     */
+    ServiceResult<List<TbContent>> findByCategoryId(Integer categoryId);
 }

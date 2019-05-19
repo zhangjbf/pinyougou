@@ -30,4 +30,6 @@
                    cluster="failfast" version="1.0"></dubbo:service>
     <dubbo:service ref="goodsService" interface="com.pinyougou.itf.GoodsService" delay="-1" timeout="6000"
                    cluster="failfast" version="1.0"></dubbo:service>
+    <dubbo:service ref="itemService" interface="com.pinyougou.itf.ItemService" delay="-1" timeout="6000"
+                   cluster="failfast" version="1.0"></dubbo:service>
 </beans>

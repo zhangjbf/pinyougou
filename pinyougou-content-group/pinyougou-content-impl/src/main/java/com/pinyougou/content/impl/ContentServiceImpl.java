@@ -58,4 +58,11 @@ public class ContentServiceImpl implements ContentService {
         serviceResult.setResult(contentModel.findOne(id));
         return serviceResult;
     }
+
+    @Override
+    public ServiceResult<List<TbContent>> findByCategoryId(Integer categoryId) {
+        ServiceResult<List<TbContent>> serviceResult = new ServiceResult<>();
+        serviceResult.setResult(contentModel.findByCategoryId(categoryId));
+        return serviceResult;
+    }
 }

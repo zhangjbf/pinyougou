@@ -22,4 +22,8 @@ public interface TbContentMapper {
     Integer update(ContentVO vo);
 
     TbContent findOne(Integer id);
+
+    List<TbContent> findByCategoryId(Integer categoryId);
+
+    List<Integer> findCategoryIdById(List<Integer> listData);
 }

@@ -22,4 +22,5 @@ public interface TbBrandMapper {
     TbBrand findById(Integer id);
 
     Integer update(BrandVO brandVO);
+
 }

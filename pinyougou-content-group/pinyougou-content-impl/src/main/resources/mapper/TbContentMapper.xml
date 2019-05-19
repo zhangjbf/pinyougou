@@ -62,4 +62,18 @@
         from tb_content
         where id = #{id}
     </select>
+    <select id="findByCategoryId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_content
+        where category_id = #{categoryId}
+    </select>
+    <select id="findCategoryIdById" resultType="integer">
+        select distinct category_id
+        from tb_content
+        where id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

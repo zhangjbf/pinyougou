@@ -3,6 +3,7 @@ package com.pinyougou.content.model;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -28,6 +29,11 @@ public class ContentModel extends TransactionSupport {
     @Autowired
     private TbContentMapper tbContentMapper;
 
+    @Autowired
+    private RedisTemplate   redisTemplate;
+
+    private String          TB_CONTENT_CATEGORY_ID = "tb_content|category_id";
+
     public PageResult<TbContent> search(ContentVO vo) {
         if (null == vo) {
             throw new BusinessException("请求参数为空");
@@ -45,6 +51,11 @@ public class ContentModel extends TransactionSupport {
         TransactionStatus status = this.createTransactionStatus(TransactionDefinition.PROPAGATION_REQUIRED);
         try {
             tbContentMapper.add(vo);
+            /**
+             * 新增广告之后，需要清空redis中对应的categoryId广告缓存
+             */
+            redisTemplate.boundHashOps(TB_CONTENT_CATEGORY_ID).delete(vo.getCategoryId());
+
             this.commitTransaction(status);
         } catch (Exception e) {
             this.rollbackTransaction(status);
@@ -60,6 +71,12 @@ public class ContentModel extends TransactionSupport {
         TransactionStatus status = this.createTransactionStatus(TransactionDefinition.PROPAGATION_REQUIRED);
         try {
             tbContentMapper.delete(listData);
+            /**
+             * 删除广告后，需要清空redis中对应的categoryId广告缓存
+             */
+            List<Integer> categoryIds = tbContentMapper.findCategoryIdById(listData);
+            redisTemplate.boundHashOps(TB_CONTENT_CATEGORY_ID).delete(categoryIds);
+
             this.commitTransaction(status);
         } catch (Exception e) {
             this.rollbackTransaction(status);
@@ -75,6 +92,11 @@ public class ContentModel extends TransactionSupport {
         TransactionStatus status = this.createTransactionStatus(TransactionDefinition.PROPAGATION_REQUIRED);
         try {
             tbContentMapper.update(vo);
+            /**
+             * 修改广告之后，需要清空redis中对应的categoryId广告缓存
+             */
+            redisTemplate.boundHashOps(TB_CONTENT_CATEGORY_ID).delete(vo.getCategoryId());
+
             this.commitTransaction(status);
         } catch (Exception e) {
             this.rollbackTransaction(status);
@@ -89,5 +111,29 @@ public class ContentModel extends TransactionSupport {
         }
         return tbContentMapper.findOne(id);
 
+    }
+
+    public List<TbContent> findByCategoryId(Integer categoryId) {
+        if (null == categoryId || categoryId == 0) {
+            throw new BusinessException("请求参数错误");
+        }
+        /**
+         * 优先从redis中取值
+         */
+        List<TbContent> listContent = (List<TbContent>) redisTemplate.boundHashOps(TB_CONTENT_CATEGORY_ID)
+            .get(categoryId);
+        if (null != listContent && listContent.size() > 0) {
+            return listContent;
+        }
+        /**
+         * 如果redis中没有取到值，则返回数据库中的值
+         */
+        listContent = tbContentMapper.findByCategoryId(categoryId);
+        /**
+         * 将从数据库中查询到的数据缓存到redis中
+         */
+        redisTemplate.boundHashOps(TB_CONTENT_CATEGORY_ID).put(categoryId, listContent);
+
+        return listContent;
     }
 }
