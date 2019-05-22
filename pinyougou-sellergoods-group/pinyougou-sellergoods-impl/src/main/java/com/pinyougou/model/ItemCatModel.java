@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -25,10 +26,21 @@ public class ItemCatModel extends TransactionSupport {
     @Autowired
     private TbItemCatMapper tbItemCatMapper;
 
+    @Autowired
+    private RedisTemplate   redisTemplate;
+
     public List<TbItemCat> findByParentId(Integer parentId) {
         if (null == parentId) {
             throw new BusinessException("请求参数错误");
         }
+
+        List<TbItemCat> tbItemCatList = findAll();
+        if (null != tbItemCatList && tbItemCatList.size() > 0) {
+            for (TbItemCat tbItemCat : tbItemCatList) {
+                redisTemplate.boundHashOps("itemCat").put(tbItemCat.getName(), tbItemCat.getTypeId());
+            }
+        }
+
         return tbItemCatMapper.findByParentId(parentId);
     }
 

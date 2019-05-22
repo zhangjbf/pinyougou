@@ -1,5 +1,6 @@
 package com.pinyougou.search.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,20 @@ public class ItemSearchServiceImpl implements ItemSearchService {
     public ServiceResult<Map<String, Object>> search(Map searchMap) {
         ServiceResult<Map<String, Object>> result = new ServiceResult<>();
         result.setResult(itemSearchModel.search(searchMap));
+        return result;
+    }
+
+    @Override
+    public ServiceResult<Map<String, List<String>>> searchCategoryList(Map searchMap) {
+        ServiceResult<Map<String, List<String>>> result = new ServiceResult<>();
+        result.setResult(itemSearchModel.searchCategoryList(searchMap));
+        return result;
+    }
+
+    @Override
+    public ServiceResult<Map<String, Object>> searchBrandAndSpecList(String category) {
+        ServiceResult<Map<String, Object>> result = new ServiceResult<>();
+        result.setResult(itemSearchModel.searchBrandAndSpecList(category));
         return result;
     }
 }

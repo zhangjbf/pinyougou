@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -35,14 +36,31 @@ public class TypeTemplateModel extends TransactionSupport {
     @Autowired
     private TbSpecificationOptionMapper tbSpecificationOptionMapper;
 
+    @Autowired
+    private RedisTemplate               redisTemplate;
+
     public PageResult<TbTypeTemplate> search(TypeTemplateVO vo) {
         if (null == vo) {
             throw new BusinessException("请求参数错误");
         }
+
+        this.save2Redis();
+
         PageHelper.startPage(vo.getPage(), vo.getRows());
         List<TbTypeTemplate> tbTypeTemplateList = tbTypeTemplateMapper.search(vo);
         PageInfo<TbTypeTemplate> info = new PageInfo<>(tbTypeTemplateList);
         return new PageResult<>(info.getTotal(), info.getList());
+    }
+
+    private void save2Redis() {
+        List<TbTypeTemplate> tbTypeTemplateList = tbTypeTemplateMapper.search(new TypeTemplateVO());
+        if (null != tbTypeTemplateList && tbTypeTemplateList.size() > 0) {
+            for (TbTypeTemplate tbTypeTemplate : tbTypeTemplateList) {
+                redisTemplate.boundHashOps("brandList").put(tbTypeTemplate.getId(), tbTypeTemplate.getBrandIds());
+                String specIds = tbTypeTemplateMapper.findBySpecList(tbTypeTemplate.getId());
+                redisTemplate.boundHashOps("specList").put(tbTypeTemplate.getId(), specIds);
+            }
+        }
     }
 
     public Boolean add(TypeTemplateVO vo) {

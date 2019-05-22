@@ -1,6 +1,8 @@
 package com.pinyougou.search.controller;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class ItemSearchController {
 
     @RequestMapping("/search")
     public Map<String, Object> search(@RequestBody Map searchMap) {
+        Map<String, Object> mapData = new HashMap<>();
+
         if (null == searchMap) {
             return new HashMap<>();
         }
@@ -36,6 +40,27 @@ public class ItemSearchController {
         if (null == serviceResult.getResult() || serviceResult.getResult().size() == 0) {
             return new HashMap<>();
         }
-        return serviceResult.getResult();
+        mapData.putAll(serviceResult.getResult());
+
+        ServiceResult<Map<String, List<String>>> categoryServiceResult = itemSearchService.searchCategoryList(searchMap);
+        if (!categoryServiceResult.getSuccess()) {
+            return new HashMap<>();
+        }
+        if (null == categoryServiceResult.getResult() || categoryServiceResult.getResult().size() == 0) {
+            return new HashMap<>();
+        }
+        mapData.putAll(categoryServiceResult.getResult());
+
+        ServiceResult<Map<String, Object>> brandAndSpecListServiceResult = itemSearchService
+            .searchBrandAndSpecList(categoryServiceResult.getResult().get("categoryList").get(0));
+        if (!brandAndSpecListServiceResult.getSuccess()) {
+            return new HashMap<>();
+        }
+        if (null == brandAndSpecListServiceResult.getResult() || brandAndSpecListServiceResult.getResult().size() == 0) {
+            return new HashMap<>();
+        }
+        mapData.putAll(brandAndSpecListServiceResult.getResult());
+
+        return mapData;
     }
 }
