@@ -1,6 +1,5 @@
 package com.pinyougou.search.controller;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,36 +30,40 @@ public class ItemSearchController {
         Map<String, Object> mapData = new HashMap<>();
 
         if (null == searchMap) {
-            return new HashMap<>();
+            return mapData;
         }
         ServiceResult<Map<String, Object>> serviceResult = itemSearchService.search(searchMap);
         if (!serviceResult.getSuccess()) {
-            return new HashMap<>();
+            return mapData;
         }
         if (null == serviceResult.getResult() || serviceResult.getResult().size() == 0) {
-            return new HashMap<>();
+            return mapData;
         }
         mapData.putAll(serviceResult.getResult());
 
-        ServiceResult<Map<String, List<String>>> categoryServiceResult = itemSearchService.searchCategoryList(searchMap);
+        ServiceResult<Map<String, List<String>>> categoryServiceResult = itemSearchService
+            .searchCategoryList(searchMap);
         if (!categoryServiceResult.getSuccess()) {
-            return new HashMap<>();
+            return mapData;
         }
         if (null == categoryServiceResult.getResult() || categoryServiceResult.getResult().size() == 0) {
-            return new HashMap<>();
+            return mapData;
         }
         mapData.putAll(categoryServiceResult.getResult());
+        if (null != categoryServiceResult.getResult().get("categoryList")
+            && categoryServiceResult.getResult().get("categoryList").size() > 0) {
+            ServiceResult<Map<String, Object>> brandAndSpecListServiceResult = itemSearchService
+                .searchBrandAndSpecList(categoryServiceResult.getResult().get("categoryList").get(0));
+            if (!brandAndSpecListServiceResult.getSuccess()) {
+                return mapData;
+            }
+            if (null == brandAndSpecListServiceResult.getResult()
+                || brandAndSpecListServiceResult.getResult().size() == 0) {
+                return mapData;
+            }
+            mapData.putAll(brandAndSpecListServiceResult.getResult());
 
-        ServiceResult<Map<String, Object>> brandAndSpecListServiceResult = itemSearchService
-            .searchBrandAndSpecList(categoryServiceResult.getResult().get("categoryList").get(0));
-        if (!brandAndSpecListServiceResult.getSuccess()) {
-            return new HashMap<>();
         }
-        if (null == brandAndSpecListServiceResult.getResult() || brandAndSpecListServiceResult.getResult().size() == 0) {
-            return new HashMap<>();
-        }
-        mapData.putAll(brandAndSpecListServiceResult.getResult());
-
         return mapData;
     }
 }

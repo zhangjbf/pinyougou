@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.pinyougou.model.JsonUtils;
+import com.pinyougou.model.SelectOptionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -116,9 +118,9 @@ public class ItemSearchModel {
         Integer typteId = (Integer) redisTemplate.boundHashOps("itemCat").get(category);
         if (null != typteId && typteId != 0) {
             String brandList = (String) redisTemplate.boundHashOps("brandList").get(typteId);
-            mapData.put("brandList",brandList);
+            mapData.put("brandList", JsonUtils.jsonToList(brandList, SelectOptionVO.class));
             String specList = (String) redisTemplate.boundHashOps("specList").get(typteId);
-            mapData.put("specList",brandList);
+            mapData.put("specList",JsonUtils.jsonToList(specList, SelectOptionVO.class));
         }
         return mapData;
     }
