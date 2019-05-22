@@ -7,7 +7,7 @@
         </layout>
     </appender>
     <appender name="file-log" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="file" value="/rgec/log/autodeploy/java/search-goods/search-service.log"/>
+        <param name="file" value="/rgec/log/autodeploy/java/search-service/search-service.log"/>
         <param name="Encoding" value="UTF-8"/>
         <param name="append" value="true"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd"/>
@@ -18,7 +18,7 @@
 
     <!-- logstash -->
     <appender name="logstash-log" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="file" value="/rgec/log/autodeploy/java/search-goods/logstash.log"/>
+        <param name="file" value="/rgec/log/autodeploy/java/search-service/logstash.log"/>
         <param name="Encoding" value="UTF-8"/>
         <param name="append" value="true"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd"/>
