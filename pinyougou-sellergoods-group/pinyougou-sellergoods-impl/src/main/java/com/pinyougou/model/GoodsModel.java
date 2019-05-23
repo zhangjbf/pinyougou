@@ -18,12 +18,16 @@ import com.pinyougou.dao.TbGoodsMapper;
 import com.pinyougou.dao.TbItemCatMapper;
 import com.pinyougou.dao.TbItemMapper;
 import com.pinyougou.dao.TbSellerMapper;
+import com.pinyougou.model.param.ImportItemParam;
+import com.pinyougou.model.rule.DeleteItemRule;
+import com.pinyougou.model.rule.ImportItemRule;
 import com.pinyougou.pojo.TbBrand;
 import com.pinyougou.pojo.TbGoods;
 import com.pinyougou.pojo.TbGoodsDesc;
 import com.pinyougou.pojo.TbItem;
 import com.pinyougou.pojo.TbItemCat;
 import com.pinyougou.pojo.TbSeller;
+import com.pinyougou.transaction.AppTransactionSynchronization;
 import com.pinyougou.transaction.TransactionSupport;
 import com.pinyougou.vo.GoodsVO;
 
@@ -56,6 +60,12 @@ public class GoodsModel extends TransactionSupport {
 
     @Autowired
     private TbItemMapper      TbItemMapper;
+
+    @Autowired
+    private ImportItemRule    importItemRule;
+
+    @Autowired
+    private DeleteItemRule    deleteItemRule;
 
     public PageResult<TbGoods> search(GoodsVO vo) {
         if (null == vo) {
@@ -146,6 +156,9 @@ public class GoodsModel extends TransactionSupport {
         try {
             tbGoodsMapper.delete(listData);
             tbGoodsDescMapper.delete(listData);
+            tbItemMapper.delete(listData);
+            this.registerSynchronization(
+                new AppTransactionSynchronization(new ImportItemParam(listData, null), deleteItemRule));
             this.commitTransaction(status);
         } catch (Exception e) {
             this.rollbackTransaction(status);
@@ -214,7 +227,10 @@ public class GoodsModel extends TransactionSupport {
         }
         TransactionStatus status = this.createTransactionStatus(TransactionDefinition.PROPAGATION_REQUIRED);
         try {
-            tbGoodsMapper.updateStatus(listData,goodsStatus);
+            tbGoodsMapper.updateStatus(listData, goodsStatus);
+            tbItemMapper.updateStatus(listData, goodsStatus);
+            this.registerSynchronization(
+                new AppTransactionSynchronization(new ImportItemParam(listData, goodsStatus), importItemRule));
             this.commitTransaction(status);
         } catch (Exception e) {
             this.rollbackTransaction(status);

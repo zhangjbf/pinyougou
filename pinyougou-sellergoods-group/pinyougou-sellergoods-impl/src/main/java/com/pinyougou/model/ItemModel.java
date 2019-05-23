@@ -33,7 +33,6 @@ public class ItemModel {
 
     public Boolean importItem2Solr() {
         List<TbItem> itemList = tbItemMapper.findAll();
-
         if (null == itemList || itemList.size() > 0) {
             List<String> listData = new ArrayList<>();
             for (TbItem tbItem : itemList) {
@@ -45,6 +44,22 @@ public class ItemModel {
             solrTemplate.deleteById(listData);
             solrTemplate.commit();
             log.info("清除导入数据完成");
+            log.info("开始导入数据");
+            solrTemplate.saveBeans(itemList);
+            solrTemplate.commit();
+            log.info("导入数据完成");
+        }
+        return Boolean.TRUE;
+    }
+
+    public Boolean importItem2Solr(List<TbItem> itemList) {
+        if (null == itemList || itemList.size() > 0) {
+            List<String> listData = new ArrayList<>();
+            for (TbItem tbItem : itemList) {
+                listData.add(String.valueOf(tbItem.getId()));
+                Map specMap = JSON.parseObject(tbItem.getSpec());
+                tbItem.setSpecMap(specMap);
+            }
             log.info("开始导入数据");
             solrTemplate.saveBeans(itemList);
             solrTemplate.commit();

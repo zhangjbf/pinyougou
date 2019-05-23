@@ -55,75 +55,82 @@
     </select>
     <update id="update" parameterType="com.pinyougou.pojo.TbItem">
         update tb_item
-        <set >
-            <if test="title != null" >
+        <set>
+            <if test="title != null">
                 title = #{title,jdbcType=VARCHAR},
             </if>
-            <if test="sellPoint != null" >
+            <if test="sellPoint != null">
                 sell_point = #{sellPoint,jdbcType=VARCHAR},
             </if>
-            <if test="price != null" >
+            <if test="price != null">
                 price = #{price,jdbcType=DECIMAL},
             </if>
-            <if test="stockCount != null" >
+            <if test="stockCount != null">
                 stock_count = #{stockCount,jdbcType=INTEGER},
             </if>
-            <if test="num != null" >
+            <if test="num != null">
                 num = #{num,jdbcType=INTEGER},
             </if>
-            <if test="barcode != null" >
+            <if test="barcode != null">
                 barcode = #{barcode,jdbcType=VARCHAR},
             </if>
-            <if test="image != null" >
+            <if test="image != null">
                 image = #{image,jdbcType=VARCHAR},
             </if>
-            <if test="categoryid != null" >
+            <if test="categoryid != null">
                 categoryId = #{categoryid,jdbcType=INTEGER},
             </if>
-            <if test="status != null" >
+            <if test="status != null">
                 status = #{status,jdbcType=VARCHAR},
             </if>
-            <if test="createTime != null" >
+            <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="updateTime != null" >
+            <if test="updateTime != null">
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
-            <if test="itemSn != null" >
+            <if test="itemSn != null">
                 item_sn = #{itemSn,jdbcType=VARCHAR},
             </if>
-            <if test="costPirce != null" >
+            <if test="costPirce != null">
                 cost_pirce = #{costPirce,jdbcType=DECIMAL},
             </if>
-            <if test="marketPrice != null" >
+            <if test="marketPrice != null">
                 market_price = #{marketPrice,jdbcType=DECIMAL},
             </if>
-            <if test="isDefault != null" >
+            <if test="isDefault != null">
                 is_default = #{isDefault,jdbcType=VARCHAR},
             </if>
-            <if test="goodsId != null" >
+            <if test="goodsId != null">
                 goods_id = #{goodsId,jdbcType=INTEGER},
             </if>
-            <if test="sellerId != null" >
+            <if test="sellerId != null">
                 seller_id = #{sellerId,jdbcType=VARCHAR},
             </if>
-            <if test="cartThumbnail != null" >
+            <if test="cartThumbnail != null">
                 cart_thumbnail = #{cartThumbnail,jdbcType=VARCHAR},
             </if>
-            <if test="category != null" >
+            <if test="category != null">
                 category = #{category,jdbcType=VARCHAR},
             </if>
-            <if test="brand != null" >
+            <if test="brand != null">
                 brand = #{brand,jdbcType=VARCHAR},
             </if>
-            <if test="spec != null" >
+            <if test="spec != null">
                 spec = #{spec,jdbcType=VARCHAR},
             </if>
-            <if test="seller != null" >
+            <if test="seller != null">
                 seller = #{seller,jdbcType=VARCHAR},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateStatus">
+        update tb_item set status = #{status}
+        where goods_id in
+        <foreach collection="goodsIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </update>
     <select id="findAll" resultMap="BaseResultMap">
         select
@@ -131,4 +138,22 @@
         from tb_item
         where status = 1
     </select>
+    <select id="findByGoodsIdAndStatus" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_item
+        where
+        goods_id in
+        <foreach collection="goodsIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and status = #{status}
+    </select>
+    <delete id="delete">
+        delete from tb_item
+        where goods_id in
+        <foreach collection="list" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

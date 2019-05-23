@@ -2,6 +2,8 @@ package com.pinyougou.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.pinyougou.pojo.TbItem;
 
 /**
@@ -19,4 +21,10 @@ public interface TbItemMapper {
     Integer update(TbItem item);
 
     List<TbItem> findAll();
+
+    Integer updateStatus(@Param("goodsIds") List<Integer> goodsIds, @Param("status") String status);
+
+    List<TbItem> findByGoodsIdAndStatus(@Param("goodsIds") List<Integer> goodsIds, @Param("status") String status);
+
+    Integer delete(List<Integer> listData);
 }

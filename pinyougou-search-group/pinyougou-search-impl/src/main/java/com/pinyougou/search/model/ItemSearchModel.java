@@ -5,17 +5,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.pinyougou.model.JsonUtils;
-import com.pinyougou.model.SelectOptionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.data.solr.core.query.Criteria;
+import org.springframework.data.solr.core.query.FilterQuery;
 import org.springframework.data.solr.core.query.GroupOptions;
 import org.springframework.data.solr.core.query.HighlightOptions;
 import org.springframework.data.solr.core.query.HighlightQuery;
 import org.springframework.data.solr.core.query.Query;
+import org.springframework.data.solr.core.query.SimpleFilterQuery;
 import org.springframework.data.solr.core.query.SimpleHighlightQuery;
 import org.springframework.data.solr.core.query.SimpleQuery;
 import org.springframework.data.solr.core.query.result.GroupEntry;
@@ -26,6 +27,8 @@ import org.springframework.data.solr.core.query.result.HighlightPage;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
+import com.pinyougou.model.JsonUtils;
+import com.pinyougou.model.SelectOptionVO;
 import com.pinyougou.search.pojo.TbItem;
 
 /**
@@ -45,8 +48,36 @@ public class ItemSearchModel {
 
     public Map<String, Object> search(Map searchMap) {
         Map<String, Object> mapResult = new HashMap<>();
-
         HighlightQuery query = new SimpleHighlightQuery();
+        if (!"".equals(searchMap.get("price"))) {
+            String[] prices = ((String) searchMap.get("price")).split("-");
+            if (!prices[0].equals("0")) {
+                Criteria filterCriteria = new Criteria("item_price").greaterThan(prices[0]);
+                FilterQuery filterQuery = new SimpleFilterQuery(filterCriteria);
+                query.addFilterQuery(filterQuery);
+            }
+            if (!prices[1].equals("*")) {
+                Criteria filterCriteria = new Criteria("item_price").greaterThan(prices[0]);
+                FilterQuery filterQuery = new SimpleFilterQuery(filterCriteria);
+                query.addFilterQuery(filterQuery);
+            }
+        }
+
+        String sortValue = (String) searchMap.get("sort");
+        String sortField = (String) searchMap.get("sortField");
+        if (null != sortValue && !sortValue.equals("")) {
+            Sort sort = null;
+            if (sortValue.equals("ASC")) {
+                sort = new Sort(Sort.Direction.ASC, "item_" + sortField);
+            }
+            if (sortValue.equals("DESC")) {
+                sort = new Sort(Sort.Direction.DESC, "item_" + sortField);
+            }
+            if(null != sort){
+                query.addSort(sort);
+            }
+        }
+
         HighlightOptions highlightOptions = new HighlightOptions().addField("item_title");//设置高亮的域
         highlightOptions.setSimplePrefix("<em style='color:red'>");//高亮前缀
         highlightOptions.setSimplePostfix("</em>");//高亮后缀
@@ -55,7 +86,7 @@ public class ItemSearchModel {
         String keywords = (String) searchMap.get("keywords");
         Criteria criteria = new Criteria("item_keywords");
         if (!StringUtils.isEmpty(keywords)) {
-            criteria.is(searchMap.get("keywords"));
+            criteria.is(keywords.replace(" ", ""));
             query.addCriteria(criteria);
         } else {
             criteria.is("手机");
@@ -76,6 +107,7 @@ public class ItemSearchModel {
         }
 
         mapResult.put("rows", pages.getContent());
+        mapResult.put("totalPages", pages.getTotalPages());
 
         return mapResult;
     }
@@ -120,7 +152,7 @@ public class ItemSearchModel {
             String brandList = (String) redisTemplate.boundHashOps("brandList").get(typteId);
             mapData.put("brandList", JsonUtils.jsonToList(brandList, SelectOptionVO.class));
             String specList = (String) redisTemplate.boundHashOps("specList").get(typteId);
-            mapData.put("specList",JsonUtils.jsonToList(specList, SelectOptionVO.class));
+            mapData.put("specList", JsonUtils.jsonToList(specList, SelectOptionVO.class));
         }
         return mapData;
     }
