@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pinyougou.page.dao.TbGoodsDescMapper">
+    <resultMap id="BaseResultMap" type="com.pinyougou.page.pojo.TbGoodsDesc">
+        <id column="goods_id" property="goodsId" jdbcType="INTEGER"/>
+        <result column="introduction" property="introduction" jdbcType="VARCHAR"/>
+        <result column="specification_items" property="specificationItems" jdbcType="VARCHAR"/>
+        <result column="custom_attribute_items" property="customAttributeItems" jdbcType="VARCHAR"/>
+        <result column="item_images" property="itemImages" jdbcType="VARCHAR"/>
+        <result column="package_list" property="packageList" jdbcType="VARCHAR"/>
+        <result column="sale_service" property="saleService" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    goods_id, introduction, specification_items, custom_attribute_items, item_images,
+    package_list, sale_service
+  </sql>
+    <select id="findDescById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_goods_desc where goods_id = #{goodsId}
+    </select>
+</mapper>

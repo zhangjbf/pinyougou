@@ -48,12 +48,18 @@
         <spring-data-redis.version>1.7.2.RELEASE</spring-data-redis.version>
         <jsonevent-layout.version>1.7</jsonevent-layout.version>
         <spring-data-solr.version>1.5.5.RELEASE</spring-data-solr.version>
+        <freemarker.version>2.3.23</freemarker.version>
     </properties>
 
 
     <!-- 只定义依赖的版本，并不实际依赖 -->
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-solr</artifactId>

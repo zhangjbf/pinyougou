@@ -13,6 +13,7 @@ import com.pinyougou.itf.GoodsService;
 import com.pinyougou.model.PageResult;
 import com.pinyougou.model.ServiceResult;
 import com.pinyougou.model.WebAppResult;
+import com.pinyougou.page.itf.ItemPageService;
 import com.pinyougou.pojo.TbGoods;
 import com.pinyougou.vo.GoodsVO;
 
@@ -27,7 +28,10 @@ import com.pinyougou.vo.GoodsVO;
 public class GoodsController {
 
     @Autowired
-    private GoodsService goodsService;
+    private GoodsService    goodsService;
+
+    @Autowired
+    private ItemPageService itemPageService;
 
     @RequestMapping("/search")
     public PageResult<TbGoods> search(@RequestBody GoodsVO vo, Integer page, Integer rows) {
@@ -59,6 +63,21 @@ public class GoodsController {
         }
         if (!serviceResult.getResult()) {
             return WebAppResult.build(false, "更新状态出错");
+        }
+        return WebAppResult.ok();
+    }
+
+    @RequestMapping("/genHtml")
+    public WebAppResult genHtml(Integer goodsId) {
+        if (null == goodsId || goodsId == 0) {
+            return WebAppResult.build(false, "商品id错误");
+        }
+        ServiceResult<Boolean> serviceResult = itemPageService.genItemHtml(goodsId);
+        if (!serviceResult.getSuccess()) {
+            return WebAppResult.build(false, serviceResult.getMessage());
+        }
+        if (!serviceResult.getResult()) {
+            return WebAppResult.build(false, "生成商品详情页出错");
         }
         return WebAppResult.ok();
     }

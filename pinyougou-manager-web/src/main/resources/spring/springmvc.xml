@@ -47,4 +47,5 @@ http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <import resource="classpath:sellergoods-dubbo-reference.xml"></import>
     <import resource="classpath:content-dubbo-reference.xml"></import>
+    <import resource="classpath:page-dubbo-reference.xml"></import>
 </beans>
