@@ -44,7 +44,7 @@
         <version-netty>3.2.7.Final</version-netty>
         <version-log4j>1.2.17</version-log4j>
         <fast-json.version>1.2.47</fast-json.version>
-        <spirng-secrity.version>4.1.0.RELEASE</spirng-secrity.version>
+        <spirng-secrity.version>5.2.10.RELEASE</spirng-secrity.version>
         <spring-data-redis.version>1.7.2.RELEASE</spring-data-redis.version>
         <jsonevent-layout.version>1.7</jsonevent-layout.version>
         <spring-data-solr.version>1.5.5.RELEASE</spring-data-solr.version>
