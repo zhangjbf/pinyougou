@@ -39,7 +39,7 @@
         <solrj.version>4.10.3</solrj.version>
         <version-dubbo>2.5.7</version-dubbo>
         <!-- 第三方库版本号 -->
-        <version-zookeeper>3.4.5</version-zookeeper>
+        <version-zookeeper>3.4.14</version-zookeeper>
         <version-zkclient>0.1</version-zkclient>
         <version-netty>3.2.7.Final</version-netty>
         <version-log4j>1.2.17</version-log4j>
